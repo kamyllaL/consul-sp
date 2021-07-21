@@ -366,7 +366,7 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (5.0.2)
     newrelic_rpm (4.1.0.333)
-    nio4r (2.5.4)
+    nio4r (2.5.7)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
     nori (2.6.0)
@@ -420,7 +420,7 @@ GEM
       byebug (~> 11.0)
       pry (~> 0.13.0)
     public_suffix (4.0.1)
-    puma (4.3.7)
+    puma (4.3.8)
       nio4r (~> 2.0)
     rack (2.2.2)
     rack-accept (0.4.5)
@@ -693,7 +693,7 @@ DEPENDENCIES
   pg (~> 0.21.0)
   pg_search (~> 2.0.1)
   pry-byebug
-  puma (~> 4.3.5)
+  puma (~> 4.3.8)
   rails (= 5.1.7)
   rails-assets-leaflet!
   rails-assets-markdown-it (~> 8.2.1)!

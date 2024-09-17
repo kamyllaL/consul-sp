@@ -18,18 +18,6 @@
   <div class="row margin-top">
     <div class="small-12 column">
       <%= render "callout" %>
-
-      <% if @poll.voted_in_booth?(current_user) %>
-        <div class="callout warning no-margin-bottom">
-          <%= t("polls.show.already_voted_in_booth") %>
-        </div>
-      <% elsif current_user && @poll.voted_in_web?(current_user) &&
-        !@poll.expired?
-      %>
-        <div class="callout warning no-margin-bottom">
-          <%= t("polls.show.already_voted_in_web") %>
-        </div>
-      <% end %>
     </div>
   </div>
 

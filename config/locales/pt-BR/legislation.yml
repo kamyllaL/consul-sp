@@ -42,16 +42,27 @@ pt-BR:
         text_toc: Índice
         text_body: Texto
         text_comments: Comentários
+      spreedsheet:
+        id: ID
+        title: Título da versão
+        text: Parágrafo do texto
+        comment: Comentário
+        user: Usuário
+        no_comments: Essa versão não possui comentários
     processes:
       header:
         additional_info: Informações adicionais
         description: Descrição
         more_info: Mais informação e contexto
+      draft_versions:
+        spreedsheet: Download das anotações versão - %{version}
       proposals:
         empty_proposals: Não existem propostas
+        spreedsheet: Download das propostas
+        comments_spreedsheet: Download dos comentários
         filters:
           random: Aleatório
-          winners: Selecionado
+          winners: Propostas priorizadas
       debate:
         empty_questions: Não há perguntas cadastradas
         participate: Participe do debate clicando nas perguntas
@@ -185,3 +196,24 @@ pt-BR:
         tags_label: "Categorias"
       not_verified: "Para votar as propostas %{verify_account}."
       process_title: Processo de legislação colaborativa
+      spreadsheet:
+        id: ID
+        title: Proposta
+        created_at: Data de criação
+        author: Autor
+        summary: Resumo da proposta
+        description: Texto da proposta
+        video_url: Link do vídeo externo
+        image_url: Link da imagem
+        first_document: Link do documento 1
+        second_document: Link do documento 2
+        third_document: Link do documento 3
+        custom_tags: Categoria de tipo
+        subprefecture_tags: Categoria de localidade - subprefeitura
+        district_tags: Categoria de localidade - distrito
+        cached_votes_up: Votos favoráveis à proposta
+        cached_votes_down: Votos contrários à proposta
+        cached_votes_total: Total de votos
+        selected: Proposta priorizada
+        comment: Comentário
+        user: Usuário

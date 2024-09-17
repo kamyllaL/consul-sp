@@ -1,0 +1,5 @@
+<%= back_link_to admin_tags_path, t("admin.tags.back") %>
+
+<h2><%= t("admin.tags.index.add_tag") %></h2>
+
+<%= render "form", form_url: admin_tag_path(@tag) %>

@@ -41,7 +41,7 @@ pt-BR:
       - Fevereiro
       - Março
       - Abril
-      - Mai
+      - Maio
       - Junho
       - Julho
       - Agosto
@@ -195,4 +195,5 @@ pt-BR:
       long: "%B %d, %Y %H:%M"
       short: "%d %b %H:%M"
       api: "%Y-%m-%d %H"
+      date_day_and_time: "%d/%m/%Y - %H:%M"
     pm: pm

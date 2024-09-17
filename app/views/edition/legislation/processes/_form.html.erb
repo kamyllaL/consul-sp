@@ -1,0 +1,95 @@
+<%= render "shared/globalize_locales", resource: @process %>
+
+<%= translatable_form_for [:edition, @process], html: { data: { watch_changes: true } } do |f| %>
+
+  <%= render "shared/errors", resource: @process %>
+
+  <div class="row">
+    <div class="documents small-12 column">
+      <%= render "documents/nested_documents", documentable: @process, f: f %>
+    </div>
+
+    <div class="small-12 column">
+      <hr>
+    </div>
+
+    <div class="images small-12 column">
+      <%= render "images/nested_image", imageable: @process, f: f %>
+    </div>
+
+    <div class="small-12 column">
+      <hr>
+    </div>
+
+    <div class="small-12 column">
+      <h3><%= t("admin.legislation.processes.form.banner_title") %></h3>
+    </div>
+
+    <div class="small-6 large-3 column">
+      <%= f.label :background_color, nil, for: "background_color_input" %>
+      <p class="help-text"><%= t("admin.shared.color_help") %></p>
+      <div class="row collapse">
+        <div class="small-12 medium-6 column">
+          <%= f.text_field :background_color, label: false, type: :color,
+                                              value: bg_color_or_default %>
+        </div>
+        <div class="small-12 medium-6 column">
+          <%= f.text_field :background_color, label: false, id: "background_color_input" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="small-6 large-3 column end">
+      <%= f.label :font_color, nil, for: "font_color_input" %>
+      <p class="help-text"><%= t("admin.shared.color_help") %></p>
+      <div class="row collapse">
+        <div class="small-12 medium-6 column">
+          <%= f.text_field :font_color, label: false, type: :color, value: font_color_or_default %>
+        </div>
+        <div class="small-12 medium-6 column">
+          <%= f.text_field :font_color, label: false, id: "font_color_input" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="small-12 column">
+      <hr>
+    </div>
+  </div>
+
+  <div class="row">
+    <%= f.translatable_fields do |translations_form| %>
+      <div class="small-12 medium-9 column">
+        <%= translations_form.text_field :title,
+                                         placeholder: t("admin.legislation.processes.form.title_placeholder") %>
+      </div>
+
+      <div class="small-12 medium-9 column">
+        <%= translations_form.text_area :summary,
+                                        rows: 2,
+                                        placeholder: t("admin.legislation.processes.form.summary_placeholder"),
+                                        hint: t("admin.legislation.processes.form.use_markdown") %>
+      </div>
+
+      <div class="small-12 medium-9 column">
+        <%= translations_form.text_area :description,
+                                        rows: 5,
+                                        placeholder: t("admin.legislation.processes.form.description_placeholder"),
+                                        hint: t("admin.legislation.processes.form.use_markdown") %>
+      </div>
+
+      <div class="small-12 medium-9 column end">
+        <%= translations_form.text_area :additional_info,
+                                        rows: 10,
+                                        placeholder: t("admin.legislation.processes.form.additional_info_placeholder"),
+                                        hint: t("admin.legislation.processes.form.use_markdown") %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="row">
+    <div class="small-12 medium-3 column clear end">
+      <%= f.submit(class: "button success expanded", value: t("admin.legislation.processes.#{admin_submit_action(@process)}.submit_button")) %>
+    </div>
+  </div>
+<% end %>

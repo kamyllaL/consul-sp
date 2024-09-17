@@ -1,0 +1,56 @@
+<h2 class="inline-block"><%= t("admin.editors.index.title") %></h2>
+
+<%= render "admin/shared/user_search", url: search_admin_editors_path %>
+
+<div id="editors">
+  <% if @editors.any? %>
+    <h3 class="margin"><%= page_entries_info @editors %></h3>
+
+    <table>
+      <thead>
+        <th scope="col"><%= t("admin.editors.index.name") %></th>
+        <th scope="col" class="small-2"><%= t("admin.editors.index.email") %></th>
+        <th scope="col" class="small-2"><%= t("admin.editors.index.processes") %></th>
+        <th scope="col" class="small-2"><%= t("admin.editors.index.tabs") %></th>
+        <th scope="col" class="small-2"><%= t("admin.editors.index.abilities") %></th>
+        <th scope="col" class="small-2"><%= t("admin.shared.actions") %></th>
+      </thead>
+      <tbody>
+        <% @editors.each do |editor| %>
+          <tr>
+            <td>
+              <%= editor.name %>
+            </td>
+            <td>
+              <%= editor.email %>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <% if editor.persisted? %>
+                <%= link_to t("admin.editors.editor.delete"),
+                            admin_editor_path(editor),
+                            method: :delete,
+                            class: "button hollow alert expanded"
+                %>
+              <% else %>
+                <%= link_to t("admin.editors.editor.add"),
+                            { controller: "admin/editors", action: :create,
+                              user_id: editor.user_id },
+                              method: :post,
+                              class: "button success expanded" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= paginate @editors %>
+  <% else %>
+    <div class="callout primary">
+      <%= t("admin.editors.index.no_editors") %>
+    </div>
+  <% end %>
+</div>

@@ -26,7 +26,7 @@
   <div class="row margin">
     <div class="small-12 medium-3 column sidebar">
       <%= render "shared/stats/links", stats: @stats %>
-      <%= render "advanced_stats_links" if @stats.advanced? %>
+      <%= render "advanced_stats_links", stats: @stats if @stats.advanced? %>
     </div>
 
     <div class="small-12 medium-9 column stats-content">

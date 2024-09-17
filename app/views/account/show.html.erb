@@ -96,14 +96,14 @@
                 <div class="small-6 medium-4 column">
                   <%= f.select(
                     :gender,
-                    options_for_gender,
+                    options_for_gender(@account),
                     include_blank: true
                   ) %>
                 </div>
                 <div class="small-6 medium-4 column">
                   <%= f.select(
                     :ethnicity,
-                    options_for_ethnicity,
+                    options_for_ethnicity(@account),
                     include_blank: true
                   ) %>
                 </div>
@@ -188,18 +188,14 @@
           <div>
             <span class="verify-account">
               <% if current_user.level_three_verified? %>
-
-                <% if current_user.can_vote? %>
-                  <p class="already-verified">
+                <p>
+                  <% if current_user.can_vote? %>
                     <span class="icon-check"></span>
-                    <%= t("account.show.verified_account") %>
-                  </p>
-                <% else %>
-                  <p class="unverified">
+                  <% else %>
                     <span class="icon-x"></span>
-                    <%= t("account.show.unverified_account") %>
-                  </p>
-                <% end %>
+                  <% end %>
+                  <%= t("account.show.verified_account") %>
+                </p>
               <% elsif current_user.level_two_verified? %>
                 <%#= link_to t("account.show.finish_verification"), verification_path, class: "button success" %>
               <% else %>

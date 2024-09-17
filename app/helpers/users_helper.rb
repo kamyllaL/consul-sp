@@ -39,6 +39,10 @@ module UsersHelper
     current_user&.administrator?
   end
 
+  def current_editor?
+    current_user&.editor?
+  end
+  
   def current_moderator?
     current_user&.moderator?
   end
@@ -57,7 +61,7 @@ module UsersHelper
 
   def show_admin_menu?(user = nil)
     unless namespace == "officing"
-      current_administrator? || current_moderator? || current_valuator? || current_manager? ||
+      current_administrator? || current_editor? || current_moderator? || current_valuator? || current_manager? ||
         (user&.administrator?) || current_poll_officer?
     end
   end
@@ -76,12 +80,12 @@ module UsersHelper
     end
   end
 
-  def options_for_gender
-    options_for_select(gender_options, current_user.gender)
+  def options_for_gender(user)
+    options_for_select(gender_options, user.gender)
   end
 
-  def options_for_ethnicity
-    options_for_select(ethnicity_options, current_user.ethnicity)
+  def options_for_ethnicity(user)
+    options_for_select(ethnicity_options, user.ethnicity)
   end
 
   def options_for_erase_reason

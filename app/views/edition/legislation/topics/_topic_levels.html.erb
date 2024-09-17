@@ -1,0 +1,62 @@
+<h2 class="inline-block">
+  <%= t("admin.legislation.topics.document.topic_level_title") %>
+</h2>
+
+<%= link_to(
+  t("admin.legislation.topics.document.new_topic_level"),
+  new_edition_legislation_process_topic_level_path,
+  class: "button float-right margin-right"
+) %>
+
+<% if @topic_levels.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          <%= t("admin.legislation.topics.table.topic_level_label") %>
+        </th>
+        <th><%= t("admin.legislation.topics.table.title") %></th>
+        <th class="text-center">
+          <%= t("admin.legislation.topics.table.evaluable") %>
+        </th>
+        <th><%= t("admin.legislation.topics.table.table_actions") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @topic_levels.each do |topic_level| %>
+        <tr id="<%= dom_id(topic_level) %>" class="legislation_topic_level">
+          <td><strong><%= topic_level.topic_level_label %></strong></td>
+          <td><%= topic_level.title %></td>
+          <td class="text-center">
+            <% if topic_level.evaluations.any? %>
+              <i class="fa fa-check fa-check-green" aria-hidden="true"></i>
+            <% else %>
+              <i class="fa fa-times fa-times-red" aria-hidden="true"></i>
+            <% end %>
+          </td>
+          <td>
+            <%= link_to(
+              t("admin.legislation.topics.document.edit"),
+              edit_edition_legislation_process_topic_level_path(@process, topic_level),
+              class: "button hollow"
+            ) %>
+            <% if topic_level == @topic_levels.last &&
+              topic_level.topics.empty?
+            %>
+              <%= link_to(
+                t("admin.legislation.topics.document.delete"),
+                edition_legislation_process_topic_level_path(@process, topic_level),
+                method: :delete,
+                class: "button hollow alert"
+              ) %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div data-alert class="callout warning margin-top clear">
+    <%= t("admin.legislation.topics.document.empty_topic_levels") %>
+  </div>
+<% end %>

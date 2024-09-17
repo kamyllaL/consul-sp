@@ -1,6 +1,6 @@
 <% poll_group.each do |poll| %>
   <div class="poll with-image polls-cards">
-    <% if !user_signed_in? %>
+    <% if !user_signed_in? && !expired? %>
       <div class="icon-poll-answer not-logged-in" title="<%= t("polls.index.not_logged_in") %>">
         <span class="show-for-sr"><%= t("polls.index.not_logged_in") %></span>
       </div>
@@ -26,15 +26,15 @@
       <% end %>
     <% end %>
     <div class="row" data-equalizer data-equalize-on="medium">
-      <div class="small-12 medium-3 column">
-        <div class="image-container" data-equalizer-watch>
-          <% if poll.image.present? %>
-            <%= image_tag poll.image_url(:large), alt: poll.image.title.unicode_normalize %>
-          <% end %>
-        </div>
+      <div class="small-12 medium-3 column no-padding-right">
+        <% if poll.image.present? %>
+          <div class="image-container" data-equalizer-watch
+               style="background-image: url(<%= URI(asset_url poll.image_url(:large)) %>); background-size: cover; background-position: center">
+          </div>
+        <% end %>
       </div>
-      <div class="small-12 medium-9 column" data-equalizer-watch>
-        <div class="dates"></div>
+      <div class="small-12 medium-9 column poll-card-info" data-equalizer-watch>
+        <div class="poll-details">
           <h4><%= link_to_poll poll.name, poll %></h4>
           <%= auto_link_already_sanitized_html simple_format(poll.summary) %>
 
@@ -49,21 +49,22 @@
               <small><%= t("polls.index.geozone_info") %></small>
             </p>
           <% end %>
-          
-          <ul class="no-bullet inline-block tags">
-            <% poll.geozones.each do |g| %>
-              <li class="inline-block"><span><%= g.name %></span></li>
-            <% end %>
-          </ul>
 
-          <div class="column row small-collapse medium-uncollapse legislation-calendar">
-            <div class="small-12 medium-6 column">
-              <h4><%= t("polls.index.period") %></h4>
-              <p>
-                <%= format_date(poll.starts_at) %> - <%= format_date(poll.ends_at) %>  
-              </p>
-            </div>
-          </div>
+          <% if poll.geozones.any? %>
+            <ul class="no-bullet inline-block tags no-margin-bottom">
+              <% poll.geozones.each do |g| %>
+                <li class="inline-block"><span><%= g.name %></span></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+
+        <div class="column row legislation-calendar padding-left">
+          <h4><%= t("polls.index.period") %></h4>
+          <p>
+            <%= format_date(poll.starts_at) %> - <%= format_date(poll.ends_at) %>
+          </p>
+        </div>
       </div>
     </div>
   </div>

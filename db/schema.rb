@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201111193449) do
+ActiveRecord::Schema.define(version: 20201201232213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -391,7 +391,6 @@ ActiveRecord::Schema.define(version: 20201111193449) do
     t.text "description_informing"
     t.integer "max_votes"
     t.string "balloting_type"
-    t.text "description_formulation"
     t.text "description_devolutive"
     t.string "voting_style", default: "knapsack"
   end
@@ -959,10 +958,12 @@ ActiveRecord::Schema.define(version: 20201111193449) do
   create_table "local_census_records", id: :serial, force: :cascade do |t|
     t.string "document_number", null: false
     t.string "document_type", null: false
-    t.date "date_of_birth", null: false
-    t.string "postal_code", null: false
+    t.date "date_of_birth"
+    t.string "postal_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "ethnicity"
+    t.string "gender"
     t.index ["document_number", "document_type"], name: "index_local_census_records_on_document_number_and_document_type", unique: true
     t.index ["document_number"], name: "index_local_census_records_on_document_number"
   end
@@ -1229,6 +1230,7 @@ ActiveRecord::Schema.define(version: 20201111193449) do
     t.text "null_amount_log", default: ""
     t.integer "total_amount", default: 0
     t.text "total_amount_log", default: ""
+    t.text "difference_explanation"
     t.index ["booth_assignment_id"], name: "index_poll_recounts_on_booth_assignment_id"
     t.index ["officer_assignment_id"], name: "index_poll_recounts_on_officer_assignment_id"
   end

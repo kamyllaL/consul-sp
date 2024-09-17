@@ -3,9 +3,11 @@
   <li>
     <%= link_to t("stats.budgets.total_investments"), "#total_investments" %>
   </li>
-  <li>
-    <%= link_to t("stats.budgets.by_phase"), "#stats_by_phase" %>
-  </li>
+  <% if stats.budget_supports.any? %>
+    <li>
+      <%= link_to t("stats.budgets.by_phase"), "#stats_by_phase" %>
+    </li>
+  <% end %>
   <li>
     <%= link_to t("stats.budgets.by_heading"), "#stats_by_heading" %>
   </li>

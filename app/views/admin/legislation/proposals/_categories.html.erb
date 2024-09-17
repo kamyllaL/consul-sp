@@ -1,0 +1,45 @@
+<div class="legislation-process-tags">
+  <h3><%= t("admin.legislation.processes.index.categories") %> </h3>
+
+
+  <span class="js-add-tags-selected hide"><%= @all_tags %></span>
+
+  <% if @categories.any? %>
+    <div id="category_tags" class="tags">
+      <p>
+        <%= t("admin.legislation.processes.index.tag_category_label") %>  
+      </p>
+      <div class="categories">
+        <% @categories.each do |tag| %>
+          <a class="js-add-tag-link-category"><%= tag.name %></a>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @subprefectures.any? %>
+    <div id="subprefecture_tags" class="tags">
+      <p>
+        <%= t("admin.legislation.processes.index.tag_subprefecture_label") %>  
+      </p>
+      <div class="categories">
+        <% @subprefectures.each do |tag| %>
+          <a class="js-add-tag-link-subprefecture"><%= tag.name %></a>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @districts.any? %>
+    <div id="subprefecture_tags" class="tags">
+      <p>
+        <%= t("admin.legislation.processes.index.tag_district_label") %>  
+      </p>
+      <div class="categories">
+        <% @districts.each do |tag| %>
+          <a class="js-add-tag-link-district"><%= tag.name %></a>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

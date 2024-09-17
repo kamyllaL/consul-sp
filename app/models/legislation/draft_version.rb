@@ -1,3 +1,5 @@
+require "upmark"
+
 class Legislation::DraftVersion < ApplicationRecord
   VALID_STATUSES = %w[draft published].freeze
 
@@ -29,8 +31,8 @@ class Legislation::DraftVersion < ApplicationRecord
 
   def toc_html
     renderer = Redcarpet::Render::HTML_TOC.new(with_toc_data: true)
-
-    Redcarpet::Markdown.new(renderer).render(body)
+    body_markdown = Upmark.convert(body)
+    Redcarpet::Markdown.new(renderer).render(body_markdown)
   end
 
   def display_title

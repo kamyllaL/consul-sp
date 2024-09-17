@@ -31,7 +31,10 @@
   <div class="sidebar-divider"></div>
 
   <h2 class="sidebar-title">
-    <%= t("budgets.investments.index.sidebar.districts") %>
+    <%= t(
+      "budgets.investments.index.sidebar.districts",
+      count: @heading.districts.size
+    ) %>
   </h2>
 
   <ul class="district-list">

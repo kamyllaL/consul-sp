@@ -4,7 +4,20 @@
 
   <%= render "shared/errors", resource: @process %>
 
+<br>
   <div class="row">
+
+    <div class="secondary callout small-12">
+      <% if @editors.nil? || @editors.empty? %>
+        <p><%= t("admin.budgets.edit.empty_valuator}") %></p>
+      <% else %>
+        <h3><%= 'Selecionar editores' %></h3>
+        <%= f.collection_check_boxes :editor_ids, @editors, :id, :name do |box| %>
+          <%= box.label { box.check_box + box.text } %>
+        <% end %>
+      <% end %>
+    </div>
+
     <div class="small-12 medium-4 column">
       <label><%= t("admin.legislation.processes.form.draft_phase") %></label>
       <p class="help-text"><%= t("admin.legislation.processes.form.draft_phase_description") %></p>

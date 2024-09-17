@@ -12,7 +12,7 @@ class Budget
 
       if budget.vote_counting_balloting?
         vote_counting_winners.each do |investment|
-          investment.update!(winner: true)
+          investment.update!(winner: true, visible_to_valuators: true)
         end
       else
         investments.compatible.each do |investment|
@@ -59,11 +59,11 @@ class Budget
 
     def set_winner
       @money_spent += @current_investment.price
-      @current_investment.update!(winner: true)
+      @current_investment.update!(winner: true, visible_to_valuators: true)
     end
 
     def winners
-      investments.where(winner: true)
+      investments.winners
     end
   end
 end

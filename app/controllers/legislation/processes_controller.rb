@@ -47,10 +47,10 @@ class Legislation::ProcessesController < Legislation::BaseController
       end
       format.csv do
         exporter = Legislation::Debate::Exporter.new(@process.questions)
-        if debate_csv_type == "answers"
+        if csv_type == "answers"
           send_data exporter.answers_csv,
             filename: "respostas-fechadas-debate-#{@process.filename}.csv"
-        elsif debate_csv_type == "comments"
+        elsif csv_type == "comments"
           send_data exporter.comments_csv,
             filename: "respostas-abertas-debate-#{@process.filename}.csv"
         end
@@ -155,7 +155,24 @@ class Legislation::ProcessesController < Legislation::BaseController
 
     if @process.proposals_phase.started? || (current_user&.administrator?)
       legislation_proposal_votes(@proposals)
-      render :proposals
+
+      respond_to do |format|
+        format.html do
+          render :proposals
+        end
+
+        format.csv do
+          all_proposals = ::Legislation::Proposal.where(process: @process)
+          exporter = Legislation::Proposal::Exporter.new(all_proposals)
+          if csv_type == "proposals"
+            send_data exporter.to_csv,
+              filename: "resultado-propostas-#{@process.filename}.csv"
+          elsif csv_type == "proposal_comments"
+            send_data exporter.comments_csv,
+              filename: "comentarios-propostas-#{@process.filename}.csv"
+          end
+        end
+      end
     else
       render :phase_not_open
     end
@@ -173,7 +190,7 @@ class Legislation::ProcessesController < Legislation::BaseController
       @process = ::Legislation::Process.find(params[:process_id])
     end
 
-    def debate_csv_type
+    def csv_type
       params[:type]
     end
 end

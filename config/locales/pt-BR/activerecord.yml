@@ -133,8 +133,8 @@ pt-BR:
         one: Link
         other: Links
       local_census_record:
-        one: Registro de censo local
-        other: Registros de censo local
+        one: Eleitor
+        other: Eleitores
       feasibility_analysis:
         one: Análise de viabilidade
         other: Análises de viabilidade
@@ -147,12 +147,11 @@ pt-BR:
         description_accepting: "Descrição durante a etapa de aceitação"
         description_reviewing: "Descrição durante a etapa de revisão"
         description_selecting: "Descrição durante a seleção da etapa"
-        description_valuating: "Descrição durante a etapa de avaliação"
+        description_valuating: "Descrição durante a etapa de análise de viabilidade"
         description_balloting: "Descrição durante a etapa de votação"
         description_reviewing_ballots: "Descrição durante a etapa de revisão das cédulas"
         description_devolutive: "Descrição durante a etapa devolutiva"
         description_finished: "Descrição sobre o orçamento concluído."
-        description_formulation: "Descrição sobre a etapa análise de viabilidade."
         phase: "Etapa"
         currency_symbol: Distribuição de recursos
         max_votes: Votos por usuário
@@ -219,10 +218,10 @@ pt-BR:
         census_code: "Código do censo (opcional)"
         html_map_coordinates: "Coordenadas do MAL <map> (opcional)"
       milestone:
-        status_id: "Status atual do investimento (opcional)"
+        status_id: "Status do monitoramento"
         title: "Título"
         description: "Descrição (opcional, se houver uma condição atribuída)"
-        publication_date: "Data de publicação"
+        publication_date: "Data"
       milestone/translation:
         description: "Descrição"
       milestone/status:
@@ -419,6 +418,7 @@ pt-BR:
         body: Descrição
       tag:
         name: "Digite o nome do tópico"
+        kind: "Tipo"
       topic:
         title: "Título"
         description: "Texto inicial"
@@ -571,6 +571,19 @@ pt-BR:
         document_number: Número do documento
         date_of_birth: Data de nascimento
         postal_code: CEP
+        ethnicity: Raça
+        ethnicity_options:
+          yellow: Amarela
+          white: Branca
+          red: Indígena
+          brown: Parda
+          black: Preta
+        gender: Gênero
+        gender_options:
+          female: Feminino
+          male: Masculino
+          non_binary: Não-binário
+          unknown: Não declarado
     errors:
       models:
         user:
@@ -581,6 +594,7 @@ pt-BR:
               password_already_set: "Este usuário já possui uma senha"
             date_of_birth:
               min_user_age: "Usuário deve ter mais de %{age} anos"
+              max_user_age: "Data de nascimento inválida"
             username: Nome de usuário inválido
         debate:
           attributes:
@@ -629,7 +643,7 @@ pt-BR:
         local_census_record:
           attributes:
             document_type:
-              inclusion: não está incluído na lista, os números permitidos são 1 para RG, 2 para passaporte e 3 para RNE.
+              inclusion: não está incluído na lista, os valores permitidos são 'CPF' e 'RNM'.
         proposal:
           attributes:
             tag_list:

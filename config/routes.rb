@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   draw :community
   draw :debate
   draw :devise
+  draw :edition
   draw :direct_upload
   draw :document
   draw :graphql

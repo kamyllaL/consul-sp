@@ -1,0 +1,22 @@
+<h2 class="inline-block no-margin-bottom">
+  <%= t("admin.legislation.topics.document.title") %>
+</h2>
+
+<p class="topic-form-link">
+  <%= link_to(
+    t(
+      "admin.legislation.topics.document.new_topic",
+      title: @topic_levels.first.downcase_title
+    ),
+    new_edition_legislation_process_topic_path(
+      legislation_topic: { legislation_topic_level_id: @topic_levels.first.id }
+    )
+  ) %>
+</p>
+
+<% counter_level = 1 %>
+<% @topics.each.with_index(1) do |topic, index| %>
+  <%= render 'topic',
+    topic: topic, indexes: [index], counter_level: counter_level
+  %>
+<% end %>

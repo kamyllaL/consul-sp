@@ -3,15 +3,20 @@
   <%= render "shared/errors", resource: @process %>
 
   <div class="small-12 medium-8 column">
-    <%= f.text_field :custom_list, value: @process.tag_list_on(:customs).sort.join(", "),
-                      label: t("admin.legislation.proposals.form.custom_categories"),
-                      hint: t("admin.legislation.proposals.form.custom_categories_description"),
-                      placeholder: t("admin.legislation.proposals.form.custom_categories_placeholder"),
-                      class: "js-tag-list",
+    <%= f.hidden_field :custom_list, value: @process.tag_list_on(:customs).sort.join(", "),
+                      class: "js-tag-list-category",
                       aria: { describedby: "tag-list-help-text" } %>
+
+    <%= f.hidden_field :subprefecture_list, value: @process.tag_list_on(:subprefectures).sort.join(", "),
+              class: "js-tag-list-subprefecture",
+              aria: { describedby: "tag-list-help-text" } %>
+
+    <%= f.hidden_field :district_list, value: @process.tag_list_on(:districts).sort.join(", "),
+                  class: "js-tag-list-district",
+                  aria: { describedby: "tag-list-help-text" } %>
   </div>
 
-  <div class="small-12 medium-3 column clear end">
+  <div class="small-12 medium-3 clear end">
     <%= f.submit(class: "button expanded", value: t("admin.legislation.processes.#{admin_submit_action(@process)}.submit_button")) %>
   </div>
 <% end %>

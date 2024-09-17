@@ -1,14 +1,28 @@
 <% unless can?(:answer, @poll) %>
-  <% if current_user.nil? %>
-    <div class="callout primary no-margin-bottom">
+  <% if current_user.nil? && !@poll.current? %>
+    <div class="callout warning no-margin-bottom">
+      <%= t("polls.show.not_open") %>
+    </div>
+  <% elsif current_user.nil? %>
+    <div class="callout warning no-margin-bottom">
       <%= sanitize(t("polls.show.cant_answer_not_logged_in",
             signin: link_to_signin(class: "probe-message"),
             signup: link_to_signup(class: "probe-message"))) %>
+    </div>
+  <% elsif !@poll.current? %>
+    <div class="callout warning no-margin-bottom">
+      <%= t("polls.show.not_open") %>
     </div>
   <% elsif current_user.unverified? %>
     <div class="callout warning no-margin-bottom">
       <%= sanitize(t("polls.show.cant_answer_verify",
             verify_link: link_to(t("polls.show.verify_link"), verification_path))) %>
+    </div>
+  <% elsif current_user.incomplete_registration? %>
+    <div class="callout warning">
+      <%= sanitize(t(
+            "polls.show.incomplete_registration",
+            register: link_to_my_account )) %>
     </div>
   <% elsif @poll.expired? %>
     <div class="callout alert no-margin-bottom">
@@ -20,6 +34,10 @@
     <div class="callout warning no-margin-bottom">
       <%= t("polls.show.electoral_college_restricted") %>
     </div>
+  <% elsif @poll.voted_in_booth?(current_user) %>
+    <div class="callout warning no-margin-bottom">
+      <%= t("polls.show.already_voted_in_booth") %>
+    </div>
   <% else %>
     <div class="callout warning no-margin-bottom">
       <%= t("polls.show.cant_answer_wrong_geozone") %>
@@ -27,9 +45,10 @@
   <% end %>
 <% end %>
 
-<% if user_signed_in? && current_user.incomplete_registration? %>
-  <div class="callout primary">
+<% if can?(:answer, @poll) && current_user.incomplete_registration? %>
+  <div class="callout warning">
     <%= sanitize(t(
           "polls.show.incomplete_registration",
-          register: link_to_my_account )) %>  </div>
+          register: link_to_my_account )) %>
+  </div>
 <% end %>

@@ -67,7 +67,7 @@
           &nbsp;&bull;&nbsp;
           <span>
             <%= link_to comment_path(comment) do %>
-              <%= l comment.created_at.to_datetime, format: :datetime %>
+              <%= l comment.created_at.to_datetime, format: :date_day_and_time %>
             <% end %>
           </span>
         </div>

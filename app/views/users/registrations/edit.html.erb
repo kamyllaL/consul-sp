@@ -9,12 +9,12 @@
       <%= f.email_field :email,
         label: t("devise_views.users.registrations.edit.email_label"),
         autofocus: true,
-        placeholder: t("devise_views.users.registrations.edit.email_label") %>
-    </div>
-
-    <div class="small-12 column">
+        placeholder: t("devise_views.users.registrations.edit.email_label")
+      %>
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-        <div><%= t("devise_views.users.registrations.edit.waiting_for") %> <%= resource.unconfirmed_email %></div>
+        <p class="warning-mail small">
+          <%= t("devise_views.users.registrations.edit.waiting_for") %> <%= resource.unconfirmed_email %>
+        </p>
       <% end %>
     </div>
 

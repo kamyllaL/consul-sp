@@ -4,28 +4,81 @@
   <div id="total_investments" class="stats-group">
     <h4><%= t("stats.budgets.total_investments") %></h4>
 
-    <%= number_with_info_tags(
-      stats.total_budget_investments,
-      t("stats.budgets.total_investments"),
-      html_class: "total-investments"
-    ) %>
+    <div class="row">
+      <div class="small-12 column">
+        <%= number_with_info_tags(
+          stats.total_budget_investments,
+          t("stats.budgets.total_investments"),
+          html_class: "total-investments"
+        ) %>
+      </div>
+    </div>
 
-    <%= number_with_info_tags(stats.total_unfeasible_investments,
-                              t("stats.budgets.total_unfeasible_investments")) %>
-    <%= number_with_info_tags(stats.total_selected_investments,
-                              t("stats.budgets.total_selected_investments")) %>
+    <div class="row">
+      <div class="small-6 medium-4 column">
+        <i class="fas fa-file-alt file-icons"></i>
+        <%= number_with_info_tags(
+          stats.total_selected_investments,
+          t("stats.budgets.total_selected_investments")
+        ) %>
+      </div>
+      <div class="small-6 medium-4 column end">
+        <i class="fas fa-file file-icons"></i>
+        <%= number_with_info_tags(
+          stats.total_unselected_investments,
+          t("stats.budgets.total_unselected_investments")
+        ) %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="small-6 medium-4 column">
+        <i class="fas fa-file-alt file-icons"></i>
+        <%= number_with_info_tags(
+          stats.total_winner_investments,
+          t("stats.budgets.total_winner_investments")
+        ) %>
+      </div>
+      <div class="small-6 medium-4 column end">
+        <i class="fas fa-file file-icons"></i>
+        <%= number_with_info_tags(
+          stats.total_loser_investments,
+          t("stats.budgets.total_loser_investments")
+        ) %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="small-6 medium-4 column">
+        <i class="fas fa-file-alt file-icons"></i>
+        <%= number_with_info_tags(
+          stats.total_feasible_investments,
+          t("stats.budgets.total_feasible_investments")
+        ) %>
+      </div>
+      <div class="small-6 medium-4 column end">
+        <i class="fas fa-file file-icons"></i>
+        <%= number_with_info_tags(
+          stats.total_unfeasible_investments,
+          t("stats.budgets.total_unfeasible_investments")
+        ) %>
+      </div>
+    </div>
   </div>
 
-  <div id="stats_by_phase" class="stats-group">
-    <h4><%= t("stats.budgets.by_phase") %></h4>
+  <% if stats.budget_supports.any? %>
+    <div id="stats_by_phase" class="stats-group">
+      <h4><%= t("stats.budgets.by_phase") %></h4>
 
-    <% stats.phases.each do |phase| %>
-      <%= number_with_info_tags(
-        stats.send("total_participants_#{phase}_phase"),
-        t("stats.budgets.participants_#{phase}_phase")
-      ) %>
-    <% end %>
-  </div>
+      <% stats.phases.each do |phase| %>
+        <i class="fas fa-users users-icons"></i>
+        <%= number_with_info_tags(
+          stats.send("total_participants_#{phase}_phase"),
+          t("stats.budgets.participants_#{phase}_phase")
+        ) %>
+      <% end %>
+    </div>
+  <% end %>
 
   <div id="stats_by_heading" class="stats-group">
     <h4 class="margin-bottom"><%= t("stats.budgets.by_heading") %></h4>
@@ -37,7 +90,7 @@
           <th scope="col" rowspan="2"><%= sanitize(t("stats.budgets.investments_sent")) %></th>
 
           <% stats.all_phases.each do |phase| %>
-            <th scope="col" colspan="3">
+            <th scope="col" colspan="2">
               <%= t("stats.budgets.participants_#{phase}_phase") %>
             </th>
           <% end %>
@@ -46,7 +99,6 @@
           <% stats.all_phases.each do %>
             <th scope="col" class="phase-subheader"><%= t("stats.budgets.total") %></th>
             <th scope="col" class="phase-subheader"><%= t("stats.budgets.percent_total_participants") %></th>
-            <th scope="col" class="phase-subheader"><%= t("stats.budgets.percent_heading_census") %></th>
           <% end %>
         </tr>
       </thead>
@@ -69,10 +121,6 @@
               <td id="percentage_participants_<%= phase %>_phase_heading_<%= heading.id %>"
                   class="border-left border-right text-center">
                 <%= number_to_stats_percentage(stats.headings[heading.id]["percentage_participants_#{phase}_phase".to_sym]) %>
-              </td>
-              <td id="percentage_district_population_<%= phase %>_phase_heading_<%= heading.id %>"
-                  class="text-center border-right">
-                <%= number_to_stats_percentage(stats.headings[heading.id]["percentage_district_population_#{phase}_phase".to_sym]) %>
               </td>
             <% end %>
           </tr>

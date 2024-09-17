@@ -32,7 +32,7 @@
         <% @process.draft_versions.each do |draft_version| %>
           <tr id="<%= dom_id(draft_version) %>">
             <td>
-              <%= link_to draft_version.title, edit_admin_legislation_process_draft_version_path(@process, draft_version) %>
+              <%= link_to draft_version.title, admin_legislation_process_draft_version_path(@process, draft_version) %>
             </td>
             <td><%= draft_version.created_at.to_date %></td>
             <td>

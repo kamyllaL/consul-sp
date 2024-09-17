@@ -5,6 +5,7 @@ pt-BR:
         email_label: Email
         submit: Reenviar instruções
         title: Reenviar instruções de confirmação
+        warning: Não esqueça de verificar sua lixeira ou spam.
       show:
         instructions: Confirmando a conta para o email %{email}
         new_password_confirmation_label: Repita a senha de acesso

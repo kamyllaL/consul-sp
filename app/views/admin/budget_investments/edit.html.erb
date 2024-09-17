@@ -75,7 +75,11 @@
         <%= f.label :valuator_ids %>
         <ul>
         <%= f.collection_check_boxes :valuator_group_ids, @valuator_groups, :id, :name do |group| %>
-          <li><%= group.label(title: group.object.name) { group.check_box + truncate(group.object.name, length: 60) } %></li>
+          <li><%= group.label(title: group.object.name) {
+            group.check_box(
+              data: { check_trigger: dom_id(group.object) }
+            ) + truncate(group.object.name, length: 60)
+          } %></li>
         <% end %>
         </ul>
       </div>
@@ -84,8 +88,12 @@
         <hr>
         <%= f.label :valuator_ids, t("admin.budget_investments.edit.assigned_valuators") %>
         <ul>
-          <%= f.collection_check_boxes :valuator_ids, @valuators, :id, :email do |b| %>
-              <li><%= b.label(title: valuator_label(b.object)) { b.check_box + truncate(b.object.description_or_email, length: 60) } %></li>
+          <%= f.collection_check_boxes :valuator_ids, @valuators, :id, :email do |valuator| %>
+            <li><%= valuator.label(title: valuator_label(valuator.object)) {
+              valuator.check_box(
+                data: { check_target: "valuator_group_#{valuator.object.valuator_group_id}" }
+              ) + truncate(valuator.object.description_or_email, length: 60)
+            } %></li>
           <% end %>
         </ul>
       </div>

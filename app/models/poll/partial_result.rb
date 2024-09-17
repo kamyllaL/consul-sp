@@ -18,6 +18,10 @@ class Poll::PartialResult < ApplicationRecord
 
   before_save :update_logs
 
+  def self.booth_votes_count(answer)
+    where(answer: answer).sum(&:amount)
+  end
+
   def update_logs
     if will_save_change_to_amount? && amount_in_database.present?
       self.amount_log += ":#{amount_in_database}"

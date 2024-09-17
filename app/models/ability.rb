@@ -11,6 +11,8 @@ class Ability
 
       if user.administrator?
         merge Abilities::Administrator.new(user)
+      elsif user.editor?
+        merge Abilities::Editor.new(user)
       elsif user.moderator?
         merge Abilities::Moderator.new(user)
       elsif user.manager?

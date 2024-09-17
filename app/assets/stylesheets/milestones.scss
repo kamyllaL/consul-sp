@@ -45,7 +45,7 @@ $progress-bar-color:      #fea230;
   }
 
   &::before {
-    background: $budget;
+    background: $purple;
     border-radius: rem-calc(20);
     content: "";
     height: rem-calc(20);

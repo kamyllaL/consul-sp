@@ -24,8 +24,7 @@ pt-BR:
       user_permission_verify: Para realizar todas as ações, complete seu cadastro.
       user_permission_votes: Participar dos processos abertos.
       username_label: Nome de usuário
-      unverified_account: Cadastro incompleto
-      verified_account: Cadastro está completo
+      verified_account: Cadastro completo
       verify_my_account: Verificar minha conta
       change_field_instruction: "Campo desabilitado. Para alterá-lo, é necessário enviar email para %{email}"
     edit:
@@ -248,6 +247,7 @@ pt-BR:
       available_locales: Idiomas disponíveis
       collaborative_legislation: Consultas públicas
       debates: Debates
+      edition: Edição
       locale: "Idioma:"
       logo: Consul logotipo
       management: Gestão
@@ -626,7 +626,7 @@ pt-BR:
       geozone_info: "Podem participar as pessoas registradas em: "
       electoral_college_info: "Podem participar membros do colégio eleitoral"
       can_answer: "Você pode participar dessa votação"
-      not_logged_in: "Você deve entrar ou se cadastrar para participar"
+      not_logged_in: " Você precisa acessar sua conta ou se registrar para participar."
       unverified: "Você deve verificar sua conta para participar"
       cant_answer: "Esta votação não está disponível para sua localidade"
       electoral_college_restricted: Esta votação é restrita por colégio eleitoral
@@ -636,11 +636,12 @@ pt-BR:
         participate: Participe dos
         subtitle: Processos abertos
       section_footer:
-        title: Ajuda sobre votações
-        description: Votações dos cidadãos são um mecanismo de participação na qual os cidadãos podem ter decisões diretas
+        title: Sobre as votações
+        description: Participe das Votações para opinar sobre políticas públicas, projetos e composição de conselhos. Acompanhe em Processos Encerrados os resultados das votações.
       no_open_polls: "Não existem processos abertos"
       no_close_polls: "Não existem processos encerrados"
       period: Período
+      description: Descrição
       votes: "Votos"
       votes_counter:
         one: "%{count} voto"
@@ -655,7 +656,7 @@ pt-BR:
       verify_link: "verifique sua conta"
       cant_answer_expired: "Esta votação já foi encerrada."
       electoral_college_restricted: "Apenas membros do colégio eleitoral desta votação podem participar deste processo."
-      cant_answer_wrong_geozone: "Esta questão não está disponível para a sua localidade."
+      cant_answer_wrong_geozone: "Esta votação não está disponível para a sua localidade."
       more_info_title: "Descrição"
       less_info_title: "Menos informações"
       documents: Documentos
@@ -679,6 +680,7 @@ pt-BR:
         title: "Perguntas"
         most_voted_answer: "Resposta mais votada: "
       incomplete_registration: "Você precisa completar o %{register} para participar da votação"
+      not_open: "Fora do período de participação"
     poll_header:
       back_to_proposal: Voltar à proposta
   poll_questions:
@@ -708,7 +710,7 @@ pt-BR:
     "yes": "Sim"
     "no": "Não"
     search_results: "Buscar propostas"
-    search_results_for: "Buscar propostas para subprefeitura %{heading}"
+    search_results_for: "Buscar propostas para a Subprefeitura %{heading}"
     advanced_search:
       author_type: "Por categoria de autor"
       author_type_blank: "Selecione um categoria"
@@ -850,7 +852,7 @@ pt-BR:
       deleted: Apagado
       deleted_debate: Este debate foi apagado
       deleted_proposal: Esta proposta foi apagado
-      deleted_budget_investment: Este projeto de investimento foi deletado
+      deleted_budget_investment: Esta proposta foi deletada
       proposals: Propostas
       proposals_status: Status
       debates: Debates
@@ -877,7 +879,7 @@ pt-BR:
       no_private_messages: "Este usuário não aceita mensagens privadas."
       private_activity: Este usuário decidiu manter a lista de atividades privada
       send_private_message: "Enviar mensagem privada"
-      delete_alert: "Tem certeza que deseja excluir seu projeto de investimento? Esta ação não pode ser desfeita"
+      delete_alert: "Tem certeza que deseja excluir sua proposta? Esta ação não pode ser desfeita"
     proposals:
       retired: "Proposta retirada"
       draft: Rascunho

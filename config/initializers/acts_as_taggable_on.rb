@@ -82,4 +82,20 @@ module ActsAsTaggableOn
         "#{taggable_type.underscore.pluralize}_count"
       end
   end
+
+  Tag.class_eval do
+    scope :subprefecture, -> { where(kind: "subprefecture") }
+
+    def subprefecture?
+      kind == "subprefecture"
+    end
+  end
+
+  Tag.class_eval do
+    scope :district, -> { where(kind: "district") }
+
+    def district?
+      kind == "district"
+    end
+  end
 end

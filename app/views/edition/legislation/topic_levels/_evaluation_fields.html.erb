@@ -1,0 +1,16 @@
+<div id="<%= dom_id(f.object) %>" class="nested-fields">
+  <div class="field">
+    <div class="small-12 medium-9 column">
+      <%= f.hidden_field :id %>
+      <%= f.text_field :title, label: false %>
+    </div>
+
+    <div class="small-12 medium-3 column">
+      <% if @topic_level.topics.empty? %>
+        <%= link_to_remove_association(
+          t("admin.legislation.topic_levels.form.remove_option"), f, class: "delete"
+        ) %>
+      <% end %>
+    </div>
+  </div>
+</div>

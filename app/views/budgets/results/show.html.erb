@@ -26,12 +26,12 @@
 
 <%= render "budgets/subnav", budget: @budget %>
 
-<div class="row">
-  <div class="small-12 medium-3 large-2 column">
-    <h3 class="margin-bottom">
+<div class="row" data-equalizer data-equalizer-on="medium">
+  <div class="small-12 medium-3 column subprefecture-headings" data-equalizer-watch>
+    <h4 class="margin-bottom">
       <%= t("budgets.results.heading_selection_title") %>
-    </h3>
-    <ul id="headings" class="menu vertical no-margin-top no-padding-top">
+    </h4>
+    <ul id="headings" class="menu vertical">
       <% @headings.each do |heading| %>
         <li>
           <%= link_to heading.name,
@@ -42,7 +42,7 @@
     </ul>
   </div>
 
-  <div class="small-12 medium-9 large-10 column">
+  <div class="small-12 medium-9 column" data-equalizer-watch>
     <%= link_to t("budgets.results.show_all_link"), "#",
                 class: "js-toggle-link button hollow margin-bottom float-right-medium",
                 data: { "toggle-selector" => ".js-discarded",
@@ -51,13 +51,13 @@
     <%= render "results_table", results_type: :compatible,
                                 title: @heading.name,
                                 heading_price: @heading.price,
-                                investments: @investments.compatible %>
+                                investments: @investments.winners %>
 
-    <% if @investments.incompatible.present? %>
+    <% if @investments.losers.present? %>
       <%= render "results_table", results_type: :incompatible,
-                                  title: t("budgets.results.incompatibles"),
+                                  title: t("budgets.results.losers"),
                                   heading_price: @heading.price,
-                                  investments: @investments.incompatible %>
+                                  investments: @investments.losers %>
     <% end %>
 
     <p>

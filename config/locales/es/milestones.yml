@@ -4,5 +4,4 @@ es:
       no_milestones: No hay hitos definidos
       progress: Progreso
     show:
-      publication_date: "Publicado el %{publication_date}"
       status_changed: El proyecto ha cambiado al estado

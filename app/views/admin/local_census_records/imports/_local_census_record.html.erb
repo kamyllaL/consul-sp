@@ -1,18 +1,59 @@
 <tr id="<%= dom_id(local_census_record) %>" class="local-census-record">
   <td>
-    <%= local_census_record.document_type %>
+    <div><%= local_census_record.document_type.upcase %></div>
     <%= errors_for local_census_record, :document_type %>
   </td>
   <td>
-    <%= local_census_record.document_number %>
+    <div><%= local_census_record.document_number %></div>
     <%= errors_for local_census_record, :document_number %>
   </td>
   <td>
-    <%= l local_census_record.date_of_birth if local_census_record.date_of_birth.present? %>
-    <%= errors_for local_census_record, :date_of_birth %>
+    <% if local_census_record.date_of_birth.present? %>
+      <div>
+        <%= l local_census_record.date_of_birth  %>
+      </div>
+      <%= errors_for local_census_record, :date_of_birth %>
+    <% elsif local_census_record.invalid_date %>
+      <div>
+        <%= local_census_record.invalid_date  %>
+      </div>
+      <%= errors_for local_census_record, :invalid_date %>
+    <% end %>
   </td>
   <td>
-    <%= local_census_record.postal_code %>
+    <% if local_census_record.ethnicity.present? %>
+      <div>
+        <% if local_census_record.errors.include? :ethnicity %>
+          <%= local_census_record.ethnicity %>
+        <% else %>
+          <%= t(
+            "activerecord.attributes.local_census_record.ethnicity_options.#{
+              local_census_record.ethnicity
+            }"
+          ) %>
+        <% end %>
+      </div>
+      <%= errors_for local_census_record, :ethnicity %>
+    <% end %>
+  </td>
+  <td>
+    <% if local_census_record.gender.present? %>
+      <div>
+        <% if local_census_record.errors.include? :gender %>
+          <%= local_census_record.gender %>
+        <% else %>
+          <%= t(
+            "activerecord.attributes.local_census_record.gender_options.#{
+              local_census_record.gender
+            }"
+          ) %>
+        <% end %>
+      </div>
+      <%= errors_for local_census_record, :gender %>
+    <% end %>
+  </td>
+  <td>
+    <div><%= local_census_record.postal_code %></div>
     <%= errors_for local_census_record, :postal_code %>
   </td>
 </tr>

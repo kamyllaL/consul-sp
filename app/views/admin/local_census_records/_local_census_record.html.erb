@@ -1,12 +1,32 @@
 <tr id="<%= dom_id(local_census_record) %>" class="local_census_record">
   <td>
-    <%= humanize_document_type(local_census_record.document_type) %>
+    <%= local_census_record.document_type.upcase %>
   </td>
   <td>
     <%= local_census_record.document_number %>
   </td>
   <td>
-    <%= l local_census_record.date_of_birth %>
+    <% if local_census_record.date_of_birth.present? %>
+      <%= l local_census_record.date_of_birth %>
+    <% end %>
+  </td>
+  <td>
+    <% if local_census_record.ethnicity.present? %>
+      <%= t(
+        "activerecord.attributes.local_census_record.ethnicity_options.#{
+          local_census_record.ethnicity
+        }"
+      ) %>
+    <% end %>
+  </td>
+  <td>
+    <% if local_census_record.gender.present? %>
+      <%= t(
+        "activerecord.attributes.local_census_record.gender_options.#{
+          local_census_record.gender
+        }"
+      ) %>
+    <% end %>
   </td>
   <td>
     <%= local_census_record.postal_code %>

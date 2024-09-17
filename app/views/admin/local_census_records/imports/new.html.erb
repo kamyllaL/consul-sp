@@ -2,6 +2,29 @@
 
 <h2><%= t("admin.local_census_records.imports.new.title") %></h2>
 
-<h3><%= t("admin.local_census_records.imports.new.subtitle") %></h3>
+<p>
+  <%= t(
+    "admin.local_census_records.imports.new.info",
+    required_headers: local_census_records_import_required_headers
+  ) %>
+</p>
+
+<ul>
+  <li>
+    <%= t(
+      "admin.local_census_records.imports.new.gender_info",
+      gender_options: @import.gender_options
+    ) %>
+  </li>
+  <li>
+    <%= t(
+      "admin.local_census_records.imports.new.ethnicity_info",
+      ethnicity_options: @import.ethnicity_options
+    ) %>
+  </li>
+  <li>
+    <%= t("admin.local_census_records.imports.new.date_format_info") %>
+  </li>
+</ul>
 
 <%= render "form" %>

@@ -9,15 +9,15 @@
 
       <h2><%= @poll.name %></h2>
 
-      <h5><%= t("polls.index.period") %>:</h5>
-
       <p>
+        <span class="period">
+          <%= t("polls.index.period") %>:
+        </span>
         <%= format_date(@poll.starts_at) %> - <%= format_date(@poll.ends_at) %>
       </p>
 
-
       <% if @poll.description.present? %>
-        <h5><%= t("legislation.processes.header.description") %></h5>
+        <h5><%= t("polls.index.description") %></h5>
         <%= auto_link_already_sanitized_html simple_format(@poll.description) %>
       <% end %>
 
@@ -40,7 +40,7 @@
       <div class="text-center">
         <span>
           <strong class="poll-total-votes-counter">
-            <%= t("polls.index.votes_counter", count: @poll.answer_count) %>
+            <%= t("polls.index.votes_counter", count: poll_total_votes_count) %>
           </strong>
         </span>
       </div>

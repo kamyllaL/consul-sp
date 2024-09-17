@@ -1,15 +1,13 @@
 <div class="row margin-top">
   <div class="small-12 column">
-    <ul class="tabs">
+    <ul class="menu simple clear">
       <% budget_subnav_items_for(budget).each do |item| %>
         <% if item[:active] %>
-          <li class="tabs-title is-active">
-            <span class="show-for-sr"><%= t("shared.you_are_in") %></span>
-
-            <%= link_to item[:text], item[:url], class: "is-active" %>
+          <li class="is-active">
+            <h2><%= item[:text] %></h2>
           </li>
         <% else %>
-          <li class="tabs-title"><%= link_to item[:text], item[:url] %></li>
+          <li><%= link_to item[:text], item[:url] %></li>
         <% end %>
       <% end %>
     </ul>

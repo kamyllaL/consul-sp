@@ -43,26 +43,34 @@ pt-BR:
         create: "Resultados salvos"
         error_create: "Resultados NÃO foram salvos. Erro nas informações."
         error_wrong_booth: "Cabine incorreta. Resultados NÃO foram salvos."
+        difference_explanation: "O total de cédulas é maior que a quantidade de usuários com votos registrados. Por favor, adicione uma justificativa"
       new:
         title: "%{poll} - Adicionar resultados"
         not_allowed: "Você tem autorização para introduzir resultados"
         booth: "Urna"
         date: "Data"
         select_booth: "Selecione a urna"
-        ballots_white: "Cédulas completamente em branco"
-        ballots_null: "Cédulas inválidas"
-        ballots_total: "Total de células"
+        ballots_white_1: "e"
+        ballots_white_2: "em branco, se houver."
+        ballots_null_1: "sendo"
+        ballots_null_2: "inválidas"
+        ballots_total: "Total de cédulas"
         submit: "Salvar"
         results_list: "Seus resultados"
         see_results: "Exibir resultados"
+        difference_explanation: "Justificativa para quantidade diferente de eleitores que votaram e total de cédulas"
       index:
         no_results: "Nenhum resultado"
         results: Resultados
         table_answer: Responda
         table_votes: Votos
-        table_whites: "Cédulas completamente em branco"
+        table_whites: "Cédulas em branco"
         table_nulls: "Cédulas inválidas"
-        table_total: "Total de células"
+        table_total: "Total de cédulas"
+        table_total_count: "Total de cédulas: %{count}"
+        table_electors_count: "Eleitores: %{count}"
+        table_booth_name: "Urna: %{name}"
+        difference_explanation: "Justificativa para a quantidade diferente de eleitores que votaram presencialmente e o total de cédulas"
     residence:
       flash:
         create: "Documento verificado com o Censo"
@@ -85,6 +93,6 @@ pt-BR:
         cannot_vote: A pessoa não pode votar porque não está registrada na(s) região(ões) em questão.
         error_already_voted: Já participou desta votação
         submit: Confirmar voto
-        success: "Voto introduzido!"
+        success: "Voto registrado!"
       can_vote:
         submit_disable_with: "Aguarde, confirmando voto..."

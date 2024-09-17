@@ -6,7 +6,7 @@ class Legislation::Process < ApplicationRecord
   include Documentable
 
   acts_as_paranoid column: :hidden_at
-  acts_as_taggable_on :customs
+  acts_as_taggable_on :customs, :subprefectures, :districts
 
   translates :title,              touch: true
   translates :summary,            touch: true
@@ -53,6 +53,11 @@ class Legislation::Process < ApplicationRecord
     foreign_key: "legislation_process_id",
     inverse_of:  :process,
     dependent:   :destroy
+
+  belongs_to :user
+
+  has_many :editor_legislation_processes, foreign_key: "legislation_process_id"
+  has_many :editors, through: :editor_legislation_processes
 
   validates_translation :title, presence: true
   validates :start_date, presence: true
@@ -151,6 +156,10 @@ class Legislation::Process < ApplicationRecord
 
   def root_topics
     topics.roots.order(:id)
+  end
+
+  def editable?
+    start_date - 1.day > Date.today
   end
 
   private

@@ -19,6 +19,7 @@
                            placeholder: t("shared.advanced_search.general_placeholder") %>
         <% if @heading %>
           <%= hidden_field_tag "heading_id", @heading.id %>
+          <%= hidden_field_tag "heading_slug", @heading.slug %>
         <% end %>
       </div>
 

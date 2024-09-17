@@ -42,19 +42,38 @@
 
     <div class="small-12 column">
       <%= f.label :tag_list, t("legislation.proposals.form.tags_label") %>
-      <p class="help-text" id="tag-list-help-text"><%= t("proposals.form.tags_instructions") %></p>
 
-      <div id="category_tags" class="tags">
-        <% @process.tag_list_on(:customs).each do |tag| %>
-          <a class="js-add-tag-link"><%= tag %></a>
+      <div id="category_tags" class="tags categories">
+        <% customs_tags = @process.tag_list_on(:customs) %>
+        <% if customs_tags.any? %>
+          <p><%= t("admin.legislation.processes.index.tag_category_label") %></p>
+          <% customs_tags.each do |tag| %>
+              <a class="js-add-tag-link-category"><%= tag %></a>
+          <% end %>
+        <% end %>
+
+        <% subprefectures_tags = @process.tag_list_on(:subprefectures) %>
+        <% if subprefectures_tags.any? %>
+          <p><%= t("admin.legislation.processes.index.tag_subprefecture_label") %></p>
+          <% subprefectures_tags.each do |tag| %>
+            <a class="js-add-tag-link-subprefecture"><%= tag %></a>
+          <% end %>
+        <% end %>
+
+        <% districts_tags = @process.tag_list_on(:districts) %>
+        <% if districts_tags.any? %>
+          <p><%= t("admin.legislation.processes.index.tag_district_label") %></p>
+          <% districts_tags.each do |tag| %>
+            <a class="js-add-tag-link-district"><%= tag %></a>
+          <% end %>
         <% end %>
       </div>
 
       <br>
-      <%= f.text_field :tag_list, value: @proposal.tag_list.to_s,
+      <%= f.hidden_field :tag_list, value: @proposal.tag_list.to_s,
                         label: false,
                         placeholder: t("proposals.form.tags_placeholder"),
-                        class: "js-tag-list",
+                        class: "js-tag-list-category js-tag-list-subprefecture js-tag-list-district",
                         aria: { describedby: "tag-list-help-text" } %>
     </div>
 

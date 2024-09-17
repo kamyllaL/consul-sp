@@ -196,6 +196,10 @@
           <%= link_to t("admin.menu.administrators"), admin_administrators_path %>
         </li>
 
+        <li <%= "class=is-active" if controller_name == "editors" %>>
+          <%= link_to t("admin.menu.editors"), admin_editors_path %>
+        </li>
+
         <li <%= "class=is-active" if controller_name == "organizations" %>>
           <%= link_to t("admin.menu.organizations"), admin_organizations_path %>
         </li>

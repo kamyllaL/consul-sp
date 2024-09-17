@@ -54,16 +54,16 @@ pt-BR:
       sincerely: "Atenciosamente"
       share: "Compartilhe seu projeto"
     budget_investment_selected:
-      subject: "Seu projeto de investimento '%{code}' foi selecionado"
+      subject: "Sua proposta '%{code}' foi selecionada"
       hi: "Caro cidadão (ã),"
-      share: "Comece a receber votos, compartilhe seu projeto de investimento em redes sociais. Compartilhar é essencial para torná-lo realidade."
-      share_button: "Compartihle seu projeto de investimento"
+      share: "Comece a receber votos, compartilhe sua proposta nas redes sociais. Compartilhar é essencial para torná-la realidade."
+      share_button: "Compartilhe sua proposta"
       thanks: "Obrigada novamente por participar."
       sincerely: "Atenciosamente"
     budget_investment_unselected:
-      subject: "Seu projeto de investimento '%{code}' não foi selecionado"
+      subject: "Sua proposta '%{code}' não foi selecionada"
       hi: "Caro cidadão (ã),"
-      thanks: "Obrigado novamente por participar."
+      thanks: "Obrigada novamente por participar."
       sincerely: "Atenciosamente"
     evaluation_comment:
       subject: "Novo comentário de avaliação"

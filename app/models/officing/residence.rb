@@ -3,8 +3,7 @@ class Officing::Residence
   include ActiveModel::Dates
   include ActiveModel::Validations::Callbacks
 
-  attr_accessor :user, :officer, :document_number, :document_type, :year_of_birth,
-                :date_of_birth, :postal_code
+  attr_accessor :user, :officer, :document_number, :document_type, :date_of_birth, :postal_code
 
   before_validation :retrieve_census_data
 
@@ -12,9 +11,7 @@ class Officing::Residence
   validates :document_type, presence: true
   validates :date_of_birth, presence: true, if: -> { Setting.force_presence_date_of_birth? }
   validates :postal_code, presence: true, if: -> { Setting.force_presence_postal_code? }
-  validates :year_of_birth, presence: true, unless: -> { Setting.force_presence_date_of_birth? }
 
-  validate :allowed_age
   validate :residence_in_madrid
 
   def initialize(attrs = {})
@@ -35,13 +32,13 @@ class Officing::Residence
         document_number:       document_number,
         document_type:         document_type,
         geozone:               geozone,
-        date_of_birth:         response_date_of_birth.in_time_zone.to_datetime,
+        date_of_birth:         response_date_of_birth&.in_time_zone&.to_datetime,
         gender:                gender,
+        ethnicity:             ethnicity,
         residence_verified_at: Time.current,
         verified_at:           Time.current,
         erased_at:             Time.current,
         password:              random_password,
-        terms_of_service:      "1",
         email:                 nil
       }
       self.user = User.create!(user_params)
@@ -59,7 +56,6 @@ class Officing::Residence
       document_type: document_type,
       date_of_birth: date_of_birth,
       postal_code: postal_code,
-      year_of_birth: year_of_birth,
       poll_officer: officer
     )
   end
@@ -81,19 +77,6 @@ class Officing::Residence
     end
   end
 
-  def allowed_age
-    return if errors[:year_of_birth].any?
-    return unless @census_api_response.valid?
-
-    unless allowed_age?
-      errors.add(:year_of_birth, I18n.t("verification.residence.new.error_not_allowed_age"))
-    end
-  end
-
-  def allowed_age?
-    Age.in_years(response_date_of_birth) >= User.minimum_required_age
-  end
-
   def geozone
     Geozone.find_by(census_code: district_code)
   end
@@ -103,7 +86,13 @@ class Officing::Residence
   end
 
   def gender
-    @census_api_response.gender
+    gender = @census_api_response.gender
+    gender if gender.present?
+  end
+
+  def ethnicity
+    ethnicity = @census_api_response.ethnicity
+    ethnicity if ethnicity.present?
   end
 
   def response_date_of_birth
@@ -120,13 +109,7 @@ class Officing::Residence
     end
 
     def residency_valid?
-      @census_api_response.valid? && valid_year_of_birth?
-    end
-
-    def valid_year_of_birth?
-      return true if Setting.force_presence_date_of_birth?
-
-      @census_api_response.date_of_birth.year.to_s == year_of_birth.to_s
+      @census_api_response.valid?
     end
 
     def clean_document_number

@@ -1,10 +1,12 @@
 class Document < ApplicationRecord
   include DocumentsHelper
   include DocumentablesHelper
+  include Rails.application.routes.url_helpers
+
   has_attached_file :attachment, url: "/system/:class/:prefix/:style/:hash.:extension",
                                  hash_data: ":class/:style/:custom_hash_data",
                                  use_timestamp: false,
-                                 hash_secret: Rails.application.secrets.secret_key_base
+                                 hash_secret: Rails.application.secrets.paperclip_key_base
   attr_accessor :cached_attachment, :remove, :original_filename
 
   belongs_to :user
@@ -70,10 +72,28 @@ class Document < ApplicationRecord
   end
 
   def humanized_content_type
-    attachment_content_type.split("/").last.upcase
+    content_type = attachment_content_type.split("/").last
+
+    if type = CONTENT_TYPE_PATTERN[content_type.to_sym]
+      type
+    else
+      content_type.upcase
+    end
+  end
+
+  def url
+    URI.join(root_url, attachment.url).to_s
   end
 
   private
+
+    CONTENT_TYPE_PATTERN = {
+      "msword": "DOC",
+      "plain": "CSV",
+      "vnd.openxmlformats-officedocument.wordprocessingml.document": "DOCX",
+      "vnd.openxmlformats-officedocument.spreadsheetml.sheet": "XLSX",
+      "x-ole-storage": "XLS"
+    }.freeze
 
     def documentable_class
       documentable_type.constantize if documentable_type.present?

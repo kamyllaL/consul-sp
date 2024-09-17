@@ -32,12 +32,28 @@
     margin-top: $line-height;
   }
 
-  .gender-icons {
-    font-size: 3.5rem;
-    position: relative;
-    top: -5px;
+  .fas {
     margin-right: $line-height / 6;
+    margin-left: $line-height / 6;
+    position: relative;
+
+    &.gender-icons {
+      font-size: 3.5rem;
+      top: -5px;
+    }
+
+    &.file-icons {
+      font-size: 2.7rem;
+      top: -13px;
+    }
+
+    &.users-icons {
+      font-size: 3.2rem;
+      top: -9px;
+    }
   }
+
+
 
   .number-with-info {
     display: inline-block;

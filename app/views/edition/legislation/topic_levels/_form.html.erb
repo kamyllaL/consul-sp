@@ -1,0 +1,60 @@
+<div class="row">
+  <%= form_for([:edition, @process, @topic_level], url: url) do |f| %>
+
+    <%= render "shared/errors", resource: @topic_level %>
+
+    <div class="row">
+      <div class="small-12 column">
+        <%= f.text_field(:title, require: true) %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="small-12 column">
+        <%= f.check_box(
+          :show_evaluation_fields,
+          checked: @topic_level.evaluations.any?,
+          data: { checkbox_toggle: "#evaluation-fields" },
+          disabled: @topic_level.topics.any?
+        ) %>
+      </div>
+    </div>
+
+    <div id="evaluation-fields" class="row">
+      <% if @topic_level.topics.empty? %>
+        <div class="small-12 medium-9 column">
+          <%= f.label(
+            :evaluations,
+            t("admin.legislation.topic_levels.form.evaluations")
+          ) %>
+        </div>
+      <% end %>
+      <div id="nested_evaluations">
+        <%= f.fields_for :evaluations do |ff| %>
+          <%= render "evaluation_fields", f: ff %>
+        <% end %>
+
+        <div class="js-add-fields-container">
+          <div class="small-12 medium-9 column">
+            <% if @topic_level.topics.empty? %>
+              <%= link_to_add_association(
+                t("admin.legislation.topic_levels.form.add_option"),
+                f, :evaluations, class: "button hollow"
+              ) %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="actions small-12 medium-4 column float-right">
+        <%= f.submit(
+          class: "button expanded large",
+          value: t("admin.legislation.topic_levels.form.save")
+        ) %>
+      </div>
+    </div>
+
+  <% end %>
+</div>

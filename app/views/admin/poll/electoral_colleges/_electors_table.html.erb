@@ -4,7 +4,9 @@
       <th><%= t("admin.electoral_colleges.elector.document_type") %></th>
       <th><%= t("admin.electoral_colleges.elector.document_number") %></th>
       <th><%= t("admin.electoral_colleges.elector.category") %></th>
-      <th><%= t("admin.electoral_colleges.elector.user_found") %></th>
+      <th class="text-center">
+        <%= t("admin.electoral_colleges.elector.user_found") %>
+      </th>
       <% if @electoral_college.active %>
         <th class="small-4 text-center"><%= t("admin.actions.actions") %></th>
       <% end %>

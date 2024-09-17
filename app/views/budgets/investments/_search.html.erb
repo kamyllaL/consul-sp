@@ -1,0 +1,42 @@
+<div class="advanced-search-form margin-top">
+  <div class="small-12 column">
+    <%= form_tag budget_investments_path(@budget), method: :get do %>
+      <div class="status-list">
+        <% investment_status_filters.each do |status| %>
+          <%= check_box_tag :"status_filters[]",
+            status,
+            params[:status_filters]&.index(status),
+            class: 'status-filters-btn js-proposals-status-filters',
+            id: "status_filters_#{status}"
+          %>
+          <%= label_tag "status_filters[#{status}]",
+            t("budgets.show.filters.#{status}"),
+            class: 'status-radio-label'
+          %>
+        <% end %>
+      </div>
+      <div class="row">
+        <div class="small-12 medium-6 column">
+          <label for="search">
+            <%= t("shared.advanced_search.general") %>
+          </label>
+          <%= text_field_tag "search", params[:search] %>
+        </div>
+        <div class="small-12 medium-4 column">
+          <label for="heading_id">
+            <%= t("budgets.show.by_subprefecture") %>
+          </label>
+          <%= select_tag :heading_slug,
+            options_for_select(
+              budget_heading_slug_options(@budget), params[:heading_slug]
+            ),
+            { prompt: t("admin.budget_investments.index.heading_filter_all") }
+          %>
+        </div>
+        <div class="small-12 medium-2 column">
+          <%= submit_tag t("shared.advanced_search.search"), class: "button expanded" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

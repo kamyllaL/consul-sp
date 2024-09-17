@@ -33,9 +33,14 @@ class Admin::MilestoneStatusesController < Admin::BaseController
   end
 
   def destroy
-    @status.destroy!
-    redirect_to admin_milestone_statuses_path,
-                notice: t("admin.statuses.delete.notice")
+    if @status.milestones.any?
+      flash[:error] = t("admin.statuses.delete.error")
+    else
+      @status.destroy!
+      flash[:notice] = t("admin.statuses.delete.notice")
+    end
+
+    redirect_to admin_milestone_statuses_path
   end
 
   private

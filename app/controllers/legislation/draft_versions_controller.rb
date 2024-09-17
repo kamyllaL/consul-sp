@@ -8,6 +8,17 @@ class Legislation::DraftVersionsController < Legislation::BaseController
   def show
     @draft_versions_list = visible_draft_versions
     @draft_version = @draft_versions_list.find(params[:id])
+
+    exporter = Legislation::DraftVersion::Exporter.new(@draft_version)
+
+    respond_to do |format|
+      format.html do
+      end
+      format.csv do
+        send_data exporter.to_csv,
+          filename: "resultado-anotacoes-versao-#{@draft_version.title}.csv"
+      end
+    end
   end
 
   def changes

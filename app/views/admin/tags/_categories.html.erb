@@ -1,0 +1,31 @@
+<h3 class="margin"><%= t("admin.tags.index.title") %>: <%= page_entries_info @category_tags %></h3>
+
+<table>
+  <thead>
+    <th scope="col" class="small-9"><%= t("admin.tags.index.topic") %></th>
+    <th scope="col"><%= t("admin.actions.actions") %></th>
+  </thead>
+  <tbody>
+  <% @category_tags.each do |tag| %>
+    <tr>
+      <td>
+        <%= form_for(tag,
+            url: admin_tag_path(tag),
+            as: :tag,
+            html: { id: "edit_tag_#{tag.id}" }) do |f| %>
+
+            <strong><%= tag.name %></strong>
+        <% end %>
+      </td>
+      <td id="tag_<%= tag.id %>">
+        <%= link_to t("admin.tags.edit"), edit_admin_tag_path(tag), class: "button hollow" %>
+      </td>
+      <td id="tag_<%= tag.id %>">
+        <%= link_to t("admin.tags.destroy"), admin_tag_path(tag), method: :delete, class: "button hollow alert" %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= paginate @category_tags %>

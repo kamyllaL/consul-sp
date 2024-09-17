@@ -1,0 +1,54 @@
+<div class="topic-text">
+  <div class="topic-block">
+    <h4><%= "#{topic_level_label(indexes)} #{topic.title}" %></h4>
+
+    <%= link_to(
+      t("admin.legislation.topics.document.edit"),
+      edit_edition_legislation_process_topic_path(@process, topic)
+    ) %>
+
+    <%= link_to(
+      t("admin.legislation.topics.document.delete"),
+      edition_legislation_process_topic_path(@process, topic),
+      method: :delete,
+      data: delete_topic_confirmation(topic)
+    ) %>
+
+    <% if topic.description.present? %>
+      <div class="topic-description">
+        <%= wysiwyg(topic.description) %>
+      </div>
+    <% end %>
+
+    <p class="topic-form-link">
+      <% unless counter_level == @topic_levels.size %>
+        <% topic_level = @topic_levels[counter_level] %>
+        <%= link_to(
+          t(
+            "admin.legislation.topics.document.new_topic",
+            title: topic_level.downcase_title
+          ),
+          new_edition_legislation_process_topic_path(
+            legislation_topic: {
+              legislation_topic_level_id: topic_level.id,
+              parent_id: topic.id
+            }
+          )
+        ) %>
+      <% else %>
+        <br>
+      <% end %>
+    </p>
+
+    <% if topic.children.any? %>
+      <% counter_level += 1 %>
+      <% topic.ordered_children.each.with_index(1) do |child, index| %>
+        <%= render 'topic',
+          topic: child,
+          indexes: topic_indexes(indexes, index, counter_level),
+          counter_level: counter_level
+        %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

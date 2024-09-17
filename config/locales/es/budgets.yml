@@ -117,7 +117,6 @@ es:
         milestones_tab: Seguimiento
         author: Autor
         project_selected: "Este proyecto de gasto <strong>ha sido seleccionado</strong> para la etapa de votación."
-        project_winner: "Proyecto de gasto ganador"
         project_not_selected: "Este proyecto de gasto <strong>no ha sido seleccionado</strong> para la etapa de votación."
         see_price_explanation: Ver informe de coste
       wrong_price_format: Solo puede incluir caracteres numéricos
@@ -177,9 +176,6 @@ es:
       filters:
         status:
           label: "Estado actual del proyecto"
-          all: "Todos (%{count})"
-        milestone_tag:
-          label: "Etiquetas de Seguimiento"
           all: "Todos (%{count})"
     phases:
       errors:

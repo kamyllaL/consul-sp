@@ -9,7 +9,7 @@
       };
       showUsernameMessage = function(response) {
         var klass;
-        klass = response.available ? "no-error" : "error";
+        klass = response.available ? "no-error" : "error small";
         usernameInput.after($("<small class=\"" + klass + "\" style=\"margin-top: -16px;\">" + response.message + "</small>"));
       };
       validateUsername = function(username) {

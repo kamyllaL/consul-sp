@@ -1243,10 +1243,10 @@ table {
   }
 
   &.disabled {
-    color: #000;
+    color: $delete;
 
     &::before {
-      color: #000;
+      color: $delete;
       content: "\76";
     }
   }

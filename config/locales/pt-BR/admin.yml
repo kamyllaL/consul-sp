@@ -204,7 +204,7 @@ pt-BR:
           valuation_group: Grupo de avaliação
           geozone: Subprefeitura
           feasibility: Viabilidade
-          valuation_finished: Valor Final.
+          valuation_finished: Avaliação concluída
           selected: Selecionado
           visible_to_valuators: Disponível para avaliadores
           author_username: Username do autor
@@ -217,7 +217,7 @@ pt-BR:
         assigned_admin: Administrador designado
         assigned_valuators: Avaliadores designados
         classification: Classificação
-        info: "%{budget_name} - Grupo: %{group_name} - Projeto de investimento %{id}"
+        info: "%{budget_name} - Grupo: %{group_name} - Proposta %{id}"
         edit: Editar
         edit_classification: Editar classificação
         by: Por
@@ -254,13 +254,13 @@ pt-BR:
     milestones:
       index:
         table_id: "ID"
-        table_title: "Título"
+        table_title: "Última atualização"
         table_description: "Descrição"
-        table_publication_date: "Data de publicação"
+        table_publication_date: "Data da etapa"
         table_status: Etapas
         table_actions: "Ações"
-        delete: "Deletar etapas"
-        no_milestones: "Não possui etapas definidos"
+        delete: "Deletar etapa"
+        no_milestones: "Não há etapas definidas"
         image: "Imagem"
         show_image: "Mostrar imagem"
         documents: "Documentos"
@@ -268,39 +268,44 @@ pt-BR:
         new_milestone: Criar etapa
         milestone_tags: Etapas de andamento
       form:
-        admin_statuses: Etapas dos investimentos para administrador
+        admin_statuses: Acesso ao catálogo de status de monitoramento
         no_statuses_defined: Ainda não há status de investimento definidos
+        submit: Atualizar etapa
       new:
-        creating: Criar marco
+        creating: Criar etapa
       edit:
-        title: Editar marco
+        title: Editar etapa
       create:
-        notice: Novo marco criado com sucesso!
+        notice: Nova etapa criada com sucesso!
       update:
-        notice: Marco atualizado com sucesso
+        notice: Etapa atualizada com sucesso
       delete:
-        notice: Marco excluído com sucesso
+        notice: Etapa excluída com sucesso
     statuses:
       index:
-        title: Status de investimento
-        empty_statuses: Ainda não há status de investimento definidos
-        new_status: Criar novo status de investimento
+        title: Catálogo de status de monitoramento
+        empty_statuses: Ainda não há status de monitoramento definidos
+        new_status: Criar novo status
         table_name: Nome
         table_description: Descrição
         table_actions: Ações
         delete: Apagar
         edit: Editar
       edit:
-        title: Editar status de investimento
+        title: Editar status de monitoramento
       update:
-        notice: Situação de investimento atualizada com sucesso
+        notice: Status de monitoramento atualizado com sucesso
       new:
-        title: Criar status de investimento
+        title: Criar status de monitoramento
       create:
-        notice: Status de investimento criado com sucesso
+        notice: Status de monitoramento criado com sucesso
       delete:
-        notice: Status de investimento excluído com sucesso
+        notice: Status de monitoramento excluído com sucesso
+        error: Não foi possível excluir o status porque ele está sendo usado em algum processo
+      form:
+        submit: Criar status
     progress_bars:
+      manage: "Gerenciar barras de progresso"
       index:
         title: "Barras de progresso"
         no_progress_bars: "Não existem barras de progresso"
@@ -312,6 +317,12 @@ pt-BR:
         table_percentage: "Posição atual"
       new:
         creating: "Criar barra de progresso"
+      create:
+        notice: "Barra de progresso criada com sucesso"
+      update:
+        notice: "Barra de progresso atualizada com sucesso"
+      delete:
+        notice: "Barra de progresso excluída com sucesso"
     departments:
       index:
         title: Órgãos públicos
@@ -454,10 +465,10 @@ pt-BR:
     legislation:
       processes:
         create:
-          notice: 'Processo criado com sucesso. <a href="%{link}">Click to visit</a>'
+          notice: 'Processo criado com sucesso. <a href="%{link}">Acesse o processo aqui</a>'
           error: Processo não pode ser criado
         update:
-          notice: 'Processo atualizado com sucesso. <a href="%{link}">Click to visit</a>'
+          notice: 'Processo atualizado com sucesso. <a href="%{link}">Acesse o processo aqui</a>'
           error: Processo não pode ser atualizado
         destroy:
           notice: Processo excluído com sucesso
@@ -484,6 +495,10 @@ pt-BR:
           filters:
             active: Ativo
             all: Tudo
+          tag_category_label: Temas
+          tag_subprefecture_label: Subprefeituras
+          tag_district_label: Distritos
+          categories: Adicione as categorias
         new:
           back: Voltar
           title: Criar novo processo colaborativo de legislação
@@ -517,16 +532,21 @@ pt-BR:
           back: Voltar
           id: ID
           supports: Apoios
+          new_tag: Criar uma nova categoria
         form:
           custom_categories: Categorias
           custom_categories_description: Categorias que os usuários podem selecionar criando a proposta.
           custom_categories_placeholder: Insira as marcações que você deseja usar, separadas por vírgulas (,) e entre aspas ("")
       draft_versions:
+        show:
+          status:
+            draft: Rascunho
+            published: Publicado
         create:
-          notice: 'Rascunho criado com sucesso. <a href="%{link}">Click to visit</a>'
+          notice: 'Rascunho criado com sucesso. <a href="%{link}">Acesse o rascunho aqui</a>'
           error: Rascunho não pode ser criado
         update:
-          notice: 'Rascunho atualizado com sucesso. <a href="%{link}">Click to visit</a>'
+          notice: 'Rascunho atualizado com sucesso. <a href="%{link}">Acesse o rascunho aqui</a>'
           error: Rascunho não pode ser atualizado
         destroy:
           notice: Rascunho excluído com sucesso
@@ -534,6 +554,7 @@ pt-BR:
           back: Voltar
           submit_button: Salvar alterações
           warning: Você editou o texto. Não esqueça de clicar em Salvar para salvar permanentemente as mudanças.
+          title: Editar versão
         form:
           launch_text_editor: Iniciar o editor de texto
           close_text_editor: Fechar o editor de texto
@@ -721,6 +742,8 @@ pt-BR:
       users: Usuários
       debates: "Debates"
       comments: "Comentários"
+      editors: Editores
+      local_census_records: Colégio eleitoral presencial
     administrators:
       index:
         title: Administradores
@@ -749,6 +772,20 @@ pt-BR:
         delete: Apagar
       search:
         title: "Moderadores: Pesquisa de usuário"
+    editors:
+      index:
+        title: Editores
+        name: Nome
+        email: Email
+        processes: Processos habilitados
+        tabs: Abas habilitadas
+        abilities: Habilidades
+        no_editors: Não há editores.
+      editor:
+        add: Adicionar
+        delete: Apagar
+      search:
+        title: "Editores: Pesquisa de usuário"
     segment_recipient:
       all_users: Todos os usuários
       administrators: Administradores
@@ -979,6 +1016,12 @@ pt-BR:
         no_booths: "Não há urnas atribuídas a esta votação."
         table_name: "Nome"
         table_location: "Localização"
+    active_polls:
+      edit:
+        title: "Adicionar descrição"
+      form:
+        description:
+          help_text: "Este texto aparecerá no cabeçalho da página de votações. Ele pode ser usado para adicionar um contexto às votações abertas."
     poll_electors:
       create:
         notice: Eleitor incluído com sucesso
@@ -1146,7 +1189,7 @@ pt-BR:
         title: "Resultados"
         no_results: "Não há resultados"
       result:
-        table_whites: "Cédulas completamente em branco"
+        table_whites: "Cédulas em branco"
         table_nulls: "Cédulas inválidas"
         table_total: "Total de cédulas"
         table_answer: Resposta
@@ -1159,7 +1202,7 @@ pt-BR:
     booths:
       index:
         title: "Lista de cabines ativas"
-        no_booths: "Não jhá cabines ativas para nenhuma votação futura."
+        no_booths: "Não há cabines ativas para nenhuma votação futura."
         add_booth: "Adicionar urna"
         name: "Nome"
         location: "Localização"
@@ -1230,7 +1273,9 @@ pt-BR:
         id: ID
         author: Autor
         select: Selecionar
-        selected: Selecionado
+        selected: Propostas priorizadas
+        milestones: Monitoramento
+        selected: Propostas priorizadas
         milestones: Marcos
         no_proposals: Não existem propostas.
       form:
@@ -1443,13 +1488,19 @@ pt-BR:
           origin_web: Participantes da Web
           origin_total: Total de participantes
     tags:
-      create: Criar tópico
-      destroy: Deletar tópico
+      create:
+        notice: Tag criada com sucesso
+      destroy: Deletar categoria
+      edit: Editar categoria
       index:
-        add_tag: Adicionar um novo tópico de proposta
-        title: Tópicos da proposta
-        topic: Tema
-        help: "Quando um usuário criar uma proposta, os tópicos a seguir são sugeridos como etiquetas padrão."
+        add_tag: Adicionar uma nova categoria de proposta
+        title: Categorias da proposta
+        topic: Temas
+        subprefecture: Subprefeituras
+        district: Distritos
+        help: "Quando um usuário criar uma proposta, as categorias a seguir são sugeridos como etiquetas padrão."
+        kind: Tipo
+      back: Voltar
     users:
       columns:
         name: Nome
@@ -1592,15 +1643,45 @@ pt-BR:
       auditable_id: ID do registro
     local_census_records:
       index:
-        document_type: Tipo do documento
-        document_number: Número do documento
-        date_of_birth: Data de nascimento
+        title: Colégio eleitoral presencial
+        create: Adicionar eleitor
+        document_type: Tipo
+        document_number: Documento
+        date_of_birth: Nascimento
         postal_code: CEP
+        ethnicity: Raça
+        gender: Gênero
         search:
           placeholder: Pesquisar por número de documento
           search: Pesquisar
         import: Importar CSV
       new:
-        creating: Criando novo registro de censo local
+        creating: Criar eleitor
       create:
-        notice: Novo registro de censo local criado com sucesso!
+        notice: Eleitor criado com sucesso
+      edit:
+        editing: Editar eleitor
+      update:
+        notice: Eleitor atualizado com sucesso
+      destroy:
+        notice: Eleitor excluído com sucesso
+      errors:
+        invalid_date: Formato da data inválido
+      imports:
+        new:
+          title: Importar CSV de eleitores
+          info: "O arquivo deve conter os seguintes cabeçalhos: %{required_headers}"
+          gender_info: "Opções de gênero válidas: %{gender_options}"
+          ethnicity_info: "Opções de raça válidas: %{ethnicity_options}"
+          date_format_info: "Formato da data de nascimento: dd/mm/aaaa"
+          load_info: A importação pode demorar alguns minutos
+        create:
+          notice: Importação de eleitores realizada com sucesso
+        show:
+          title: Importação de eleitores
+          subtitle: Resultado
+          errored: Eleitores inválidos
+          created: Eleitores adicionados
+          import: Importar eleitores por CSV
+        local_census_records:
+          no_records_found: Nenhum registro encontrado

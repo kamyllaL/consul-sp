@@ -1,5 +1,5 @@
 <div id="poll_more_info_answers" class="expanded poll-more-info-answers">
-  <% question.question_answers.each_slice(3) do |answers| %>
+  <% question.question_answers.with_description.each_slice(3) do |answers| %>
     <div class="row" data-equalizer data-equalizer-on="medium">
       <% answers.each.with_index(1) do |answer, index| %>
         <div class="small-12 medium-4 column end answer padding-bottom <%= answer_border(index) %>" id="answer_<%= answer.id %>" data-equalizer-watch>

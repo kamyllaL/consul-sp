@@ -5,8 +5,8 @@ pt-BR:
         residence: "Endereço"
         sms: "SMS"
       local_census_records/import:
-        one: Importação de registros do censo local
-        other: Importações de registros do censo local
+        one: Importação de eleitores do colégio eleitoral presencial
+        other: Importações de eleitores do colégio eleitoral presencial
     attributes:
       verification:
         residence:

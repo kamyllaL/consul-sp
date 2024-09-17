@@ -1,0 +1,21 @@
+<% provide :title do %>
+  <%= t("admin.header.title") %> - <%= t("admin.menu.legislation") %> - <%= @process.title %> - <%= t("admin.legislation.topics.document.title") %>
+<% end %>
+
+<div class="legislation-draft-versions-index">
+
+  <%= back_link_to edition_legislation_process_topics_path, t("shared.back") %>
+
+  <h2><%= @process.title %></h2>
+
+  <%= render "edition/legislation/processes/subnav", process: @process, active: "topics" %>
+
+  <%= render "topic_levels" %>
+
+  <% if @topic_levels.any? %>
+    <div class="topic-panels topics-preview">
+      <%= render "topics" %>
+    </div>
+  <% end %>
+
+</div>

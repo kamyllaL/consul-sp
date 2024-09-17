@@ -3,7 +3,7 @@ pt-BR:
     title: "Você tem alguma ideia para %{org}?"
     subtitle: "Escolha o que você deseja criar"
     budget_investment:
-      title: "Projeto de investimento"
+      title: "Proposta"
       feature_1_html: "Ideias de como gastar parte do </strong>do orçamento municipal<strong>"
       feature_2_html: "Projectos de investimento são aceitos <strong>entre Janeiro e Março</strong>"
       feature_3_html: "Se receber suporte, é competência viável e municipal, vai para a etapa de votação"

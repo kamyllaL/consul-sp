@@ -99,6 +99,7 @@
 //= require proposals_status_filters
 //= require data_info_toggle
 //= require enable_elements
+//= require check_target
 
 var initialize_modules = function() {
   "use strict";
@@ -162,6 +163,7 @@ var initialize_modules = function() {
   App.ProposalsStatusFilters.initialize();
   App.DataInfoToggle.initialize();
   App.EnableElements.initialize();
+  App.CheckTarget.initialize();
 };
 
 $(function() {

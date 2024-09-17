@@ -10,6 +10,13 @@
 
   <%= render "admin/legislation/processes/subnav", process: @process, active: "proposals" %>
 
+  <%= render "categories" %>
   <%= render "form" %>
+
+  <%= link_to t("admin.legislation.proposals.index.new_tag"),
+	admin_tags_path, class: "inline-block medium-10" %>
+
+  <hr>
+
   <%= render "proposals", proposals: @proposals %>
 </div>

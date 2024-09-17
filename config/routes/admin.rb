@@ -92,7 +92,7 @@ namespace :admin do
 
   resources :comments, only: :index
 
-  resources :tags, only: [:index, :create, :update, :destroy]
+  resources :tags
 
   resources :officials, only: [:index, :edit, :update, :destroy] do
     get :search, on: :collection
@@ -118,6 +118,10 @@ namespace :admin do
   end
 
   resources :administrators, only: [:index, :create, :destroy, :edit, :update] do
+    get :search, on: :collection
+  end
+
+  resources :editors, only: [:index, :create, :destroy] do
     get :search, on: :collection
   end
 

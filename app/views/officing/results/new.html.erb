@@ -27,21 +27,62 @@
     <% end %>
 
     <div class="row">
-      <div class="small-12 medium-6 large-3 column">
-        <h3><%= t("officing.results.new.ballots_white") %></h3>
-        <%= text_field_tag :whites, params[:whites].presence, placeholder: "0" %>
+      <div class="small-12 column poll-officing-result">
+        <div>
+          <h3><%= t("officing.results.new.ballots_total") %></h3>
+        </div>
+        <div>
+          <%= text_field_tag :total,
+            params[:total].presence,
+            placeholder: "0"
+          %>
+        </div>
       </div>
 
-      <div class="small-12 medium-6 large-3 column end">
-        <h3><%= t("officing.results.new.ballots_null") %></h3>
-        <%= text_field_tag :nulls, params[:nulls].presence, placeholder: "0" %>
-      </div>
-
-      <div class="small-12 medium-6 large-3 column end">
-        <h3><%= t("officing.results.new.ballots_total") %></h3>
-        <%= text_field_tag :total, params[:total].presence, placeholder: "0" %>
+      <div class="small-12 column poll-officing-result">
+        <div>
+          <h3><%= t("officing.results.new.ballots_null_1") %></h3>
+        </div>
+        <div>
+          <%= text_field_tag :nulls,
+            params[:nulls].presence,
+            placeholder: "0",
+            class: "small-result"
+          %>
+        </div>
+        <div>
+          <h3><%= t("officing.results.new.ballots_null_2") %></h3>
+        </div>
+        <div>
+          <h3><%= t("officing.results.new.ballots_white_1") %></h3>
+        </div>
+        <div>
+          <%= text_field_tag :whites,
+            params[:whites].presence,
+            placeholder: "0",
+            class: "small-result"
+          %>
+        </div>
+        <div>
+          <h3><%= t("officing.results.new.ballots_white_2") %></h3>
+        </div>
       </div>
     </div>
+
+    <% if @voters&.any? && params[:total].to_i > @voters.size %>
+      <div class="row">
+        <div class="small-12 medium-9 column end">
+          <label class="result-explanation-alert">
+            <%= t("officing.results.new.difference_explanation") %>
+          </label>
+          <%= text_area_tag :difference_explanation,
+            params[:difference_explanation].presence,
+            class: "result-explanation-field-alert"
+          %>
+        </div>
+      </div>
+    <% end %>
+
     <hr>
 
     <div class="row">

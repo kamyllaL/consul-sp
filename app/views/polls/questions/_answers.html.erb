@@ -13,52 +13,63 @@
         <% if @answers_by_question_id[question.id] &&
           @answers_by_question_id[question.id].include?(answer.title)
         %>
-          <div>
-            <%= link_to answer.title,
-              destroy_answer_question_path(question, {
-                answer: answer.title, token: token, poll_id: poll.id
-              }),
-              method: :delete,
-              remote: true,
-              title: t("poll_questions.show.destroy_vote", answer: answer.title),
-              class: "button secondary hollow js-question-answer answered"
-            %>
-          </div>
+          <%= link_to answer.title,
+            destroy_answer_question_path(question, {
+              answer: answer.title, token: token, poll_id: poll.id
+            }),
+            method: :delete,
+            remote: true,
+            title: t("poll_questions.show.destroy_vote", answer: answer.title),
+            class: "button secondary hollow js-question-answer answered"
+          %>
         <% elsif question.reached_vote_limit?(current_user) %>
-          <div>
-            <span class="button secondary hollow disabled"
-              title="<%= t(
-                "poll_questions.show.vote_limit",
-                count: question.votes_per_question)
-              %>"
-            >
-              <%= answer.title %>
-            </span>
-          </div>
+          <span class="button secondary hollow disabled"
+            title="<%= t(
+              "poll_questions.show.vote_limit",
+              count: question.votes_per_question)
+            %>"
+          >
+            <%= answer.title %>
+          </span>
         <% else %>
-          <div>
-            <%= link_to answer.title,
-              answer_question_path(question, answer: answer.title, token: token),
-              method: :post,
-              remote: true,
-              title: t("poll_questions.show.vote_answer", answer: answer.title),
-              class: "button secondary hollow js-question-answer" %>
-          </div>
+          <%= link_to answer.title,
+            answer_question_path(question, answer: answer.title, token: token),
+            method: :post,
+            remote: true,
+            title: t("poll_questions.show.vote_answer", answer: answer.title),
+            class: "button secondary hollow js-question-answer" %>
         <% end %>
-        <div class="votes margin-bottom">
-          <% votes = question.answers.votes_count(answer.title) %>
-          <p><%= t("polls.index.votes_counter", count: votes) %></p>
-        </div>
+
+        <p class="answer-votes-count margin-bottom">
+          <%= t(
+            "polls.index.votes_counter",
+            count: question_answers_count(poll, question, answer)
+          ) %>
+        </p>
       </div>
     <% end %>
 
   <% elsif !user_signed_in? %>
     <% question.question_answers.order(id: :desc).each do |answer| %>
-      <%= link_to answer.title, new_user_session_path, class: "button secondary hollow" %>
+      <div class="answer-votes">
+        <div>
+          <span class="button secondary hollow disabled">
+            <%= answer.title %>
+          </span>
+        </div>
+
+        <% votes = question.answers.votes_count(answer.title) %>
+        <p class="answer-votes-count margin-bottom">
+          <%= t("polls.index.votes_counter", count: votes) %>
+        </p>
+      </div>
     <% end %>
   <% elsif !current_user.level_two_or_three_verified? %>
     <% question.question_answers.order(id: :desc).each do |answer| %>
-      <%= link_to answer.title, verification_path, class: "button secondary hollow" %>
+      <%= link_to answer.title,
+        verification_path,
+        class: "button secondary hollow margin-bottom"
+      %>
     <% end %>
   <% else %>
     <% if poll.electoral_college_restricted? &&
@@ -71,30 +82,28 @@
           category: question.category.downcase
         ) %>
       </p>
-    <% else %>
-      <div class="margin-top"></div>
     <% end %>
 
     <% question.question_answers.order(id: :desc).each do |answer| %>
       <div class="answer-votes">
-        <div>
-          <% if @answers_by_question_id[question.id] &&
-              @answers_by_question_id[question.id].include?(answer.title)
-          %>
-            <span class="button secondary hollow answered">
-              <%= answer.title %>
-            </span>
-          <% else %>
-            <span class="button secondary hollow disabled">
-              <%= answer.title %>
-            </span>
-          <% end %>
-        </div>
+        <% if @answers_by_question_id[question.id] &&
+            @answers_by_question_id[question.id].include?(answer.title)
+        %>
+          <span class="button secondary hollow answered">
+            <%= answer.title %>
+          </span>
+        <% else %>
+          <span class="button secondary hollow disabled">
+            <%= answer.title %>
+          </span>
+        <% end %>
 
-        <div class="votes margin-bottom">
-          <% votes = question.answers.votes_count(answer.title) %>
-          <p><%= t("polls.index.votes_counter", count: votes) %></p>
-        </div>
+        <p class="answer-votes-count margin-bottom">
+          <%= t(
+            "polls.index.votes_counter",
+            count: question_answers_count(poll, question, answer)
+          ) %>
+        </p>
       </div>
     <% end %>
   <% end %>

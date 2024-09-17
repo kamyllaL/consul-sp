@@ -6,7 +6,7 @@ class Admin::Poll::ElectoralColleges::ElectorsController < Admin::Poll::BaseCont
 
   def search_electors
     load_search
-    @electors = Poll::Elector.quick_search(@search)
+    @electors = @electoral_college.electors.quick_search(@search)
     respond_to do |format|
       format.js
     end

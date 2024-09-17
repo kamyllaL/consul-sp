@@ -1,0 +1,37 @@
+<div class="row">
+  <%= form_for([:edition, @process, @topic], url: url) do |f| %>
+
+    <%= render "shared/errors", resource: @topic %>
+
+    <div class="row">
+      <div class="small-12 column">
+        <%= f.text_field(:title, require: true) %>
+      </div>
+      <div class="small-12 column">
+        <%= f.text_area(:description, class: "html-area") %>
+      </div>
+    </div>
+
+    <% if @topic_level.evaluations.any? %>
+      <%= f.check_box(
+        :evaluable, checked: f.object.new_record? ? true : f.object.evaluable
+      ) %>
+    <% end %>
+
+    <%= f.hidden_field(:legislation_topic_level_id, value: @topic_level.id) %>
+
+    <% if parent_id = @parent&.id %>
+      <%= f.hidden_field(:parent_id, value: parent_id) %>
+    <% end %>
+
+    <div class="row">
+      <div class="actions small-12 medium-4 column">
+        <%= f.submit(
+          class: "button expanded large",
+          value: t("admin.legislation.topics.form.save")
+        ) %>
+      </div>
+    </div>
+
+  <% end %>
+</div>

@@ -3,12 +3,43 @@
 <br>
 
 <ul id="categories" class="no-bullet categories">
-  <% @process.tag_list_on(:customs).each do |tag| %>
-    <li class="inline-block">
-      <% css_class = { class: "is-active" } if params[:search] == tag %>
-      <%= link_to tag,
-                  legislation_process_proposals_path(process_id: @process, search: tag),
-                  css_class || {} %>
-    </li>
-  <% end %>
+	<% customs_tags = @process.tag_list_on(:customs) %>
+	<% if customs_tags.any? %>
+		<p><%= t("admin.legislation.processes.index.tag_category_label") %></p>
+		<% @process.tag_list_on(:customs).each do |tag| %>
+			<li class="inline-block">
+			  <% css_class = { class: "is-active" } if params[:search] == tag %>
+			  <%= link_to tag,
+			              legislation_process_proposals_path(process_id: @process, search: tag),
+			              css_class || {} %>
+			</li>
+		<% end %>
+	<% end %>
+
+	<% subprefectures_tags = @process.tag_list_on(:subprefectures) %>
+	<% if subprefectures_tags.any? %>
+
+		<p><%= t("admin.legislation.processes.index.tag_subprefecture_label") %></p>
+		<% @process.tag_list_on(:subprefectures).each do |tag| %>
+			<li class="inline-block">
+			  <% css_class = { class: "is-active" } if params[:search] == tag %>
+			  <%= link_to tag,
+			              legislation_process_proposals_path(process_id: @process, search: tag),
+			              css_class || {} %>
+			</li>
+		<% end %>
+	<% end %>
+
+	<% districts_tags = @process.tag_list_on(:districts) %>
+    <% if districts_tags.any? %>
+		<p><%= t("admin.legislation.processes.index.tag_district_label") %></p>
+		<% @process.tag_list_on(:districts).each do |tag| %>
+			<li class="inline-block">
+			  <% css_class = { class: "is-active" } if params[:search] == tag %>
+			  <%= link_to tag,
+			              legislation_process_proposals_path(process_id: @process, search: tag),
+			              css_class || {} %>
+			</li>
+		<% end %>
+	<% end %>
 </ul>

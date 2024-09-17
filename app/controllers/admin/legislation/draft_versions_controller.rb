@@ -19,6 +19,9 @@ class Admin::Legislation::DraftVersionsController < Admin::Legislation::BaseCont
     end
   end
 
+  def show
+  end
+
   def update
     if @draft_version.update(draft_version_params)
       link = legislation_process_draft_version_path(@process, @draft_version)

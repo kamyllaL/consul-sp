@@ -43,7 +43,7 @@
           <div class="text-center margin-bottom">
             <span class="total-supports">
               <strong>
-                <%= t("budgets.investments.investment.supports",
+                <%= t("budgets.investments.investment.votes",
                     count: investment.total_votes) %>
               </strong>
             </span>
@@ -75,10 +75,6 @@
               )) %>
             </strong>
           </div>
-        <% elsif investment.winner? && @budget.finished? %>
-          <div class="callout success">
-            <strong><%= t("budgets.investments.show.project_winner") %></strong>
-          </div>
         <% elsif investment.winner? && @budget.valuating_or_later? %>
           <div class="callout success">
             <strong>
@@ -91,7 +87,7 @@
               <%= t("budgets.investments.show.project_balloting_loser") %>
             </strong>
           </div>
-        <% elsif investment.selected? %>
+        <% elsif investment.selected? && @budget.balloting_process? %>
           <div class="callout success">
             <%= sanitize(t("budgets.investments.show.project_selected")) %>
           </div>

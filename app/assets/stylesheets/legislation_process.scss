@@ -512,15 +512,22 @@
         padding: rem-calc(32) rem-calc(32) rem-calc(32) rem-calc(48);
       }
 
+      h1 {
+        font-family: $subheader-font-family;
+      }
+
       h2 {
         font-weight: 400;
         margin-bottom: rem-calc(32);
         margin-top: rem-calc(32);
+        font-family: $subheader-font-family;
+
       }
 
       h3 {
-        font-weight: 400;
+        font-weight: 350;
         margin-bottom: rem-calc(16);
+        font-family: $subheader-font-family;
       }
 
       .anchor::before {
@@ -1304,6 +1311,17 @@
     text-align: right;
     border-bottom: 1px dashed $text-medium;
     margin-bottom: $line-height;
+  }
+}
+
+.text-preview {
+  margin-top: $line-height;
+  padding-right: $line-height / 2;
+  background: $lighter-gray;
+  font-family: $body-font-family;
+
+  h1, h2, h3 {
+    font-family: $subheader-font-family;
   }
 }
 

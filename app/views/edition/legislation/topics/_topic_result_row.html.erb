@@ -1,0 +1,30 @@
+<tr id="<%= dom_id(topic) %>">
+  <td><strong><%= topic_level_label(indexes) %></strong></td>
+  <td>
+    <%= link_to topic.title, edit_edition_legislation_process_topic_path(@process, topic) %>
+  </td>
+  <td>
+    <ul>
+      <% topic.assessments.order(:id).each do |assessment| %>
+        <li><%= "#{assessment.title} (#{assessment.topic_votes_count})" %></li>
+      <% end %>
+    </ul>
+  </td>
+  <td class="text-center">
+    <%= topic.topic_votes_count if topic.assessments.any? %>
+  </td>
+  <td class="text-center">
+    <%= topic.comments_count if topic.assessments.any? %>
+  </td>
+</tr>
+
+<% if topic.children.any? %>
+  <% counter_level += 1 %>
+  <% topic.ordered_children.each.with_index(1) do |child, index| %>
+    <%= render 'topic_result_row',
+      topic: child,
+      indexes: topic_indexes(indexes, index, counter_level),
+      counter_level: counter_level
+    %>
+  <% end %>
+<% end %>

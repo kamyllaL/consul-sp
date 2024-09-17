@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   include Verification
+  include DocumentValidation
 
   DOCUMENT_TYPES = %w(cpf rnm).freeze
 
@@ -17,6 +18,7 @@ class User < ApplicationRecord
   has_one :moderator
   has_one :valuator
   has_one :manager
+  has_one :editor
   has_one :poll_officer, class_name: "Poll::Officer"
   has_one :organization
   has_one :lock
@@ -40,7 +42,9 @@ class User < ApplicationRecord
     class_name:  "DirectMessage",
     foreign_key: :receiver_id,
     inverse_of:  :receiver
-  has_many :legislation_answers, class_name: "Legislation::Answer", dependent: :destroy, inverse_of: :user
+  has_many :legislation_answers,
+    class_name: "Legislation::Answer",
+    inverse_of: :user
   has_many :follows
   has_many :legislation_annotations,
     class_name:  "Legislation::Annotation",
@@ -95,13 +99,15 @@ class User < ApplicationRecord
 
   validate :first_and_last_names_chars_validation, if: :persisted?
 
-  validates :document_number, uniqueness: { scope: :document_type }, allow_nil: true
+  validates :document_number,
+    uniqueness: { scope: :document_type },
+    allow_nil: true,
+    if: :no_disabled_user?
 
   validate :validate_username_length
 
   validate :min_user_age
-
-  validate :cpf_number, if: :local_document?
+  validate :max_user_age
 
   validates :gender, presence: true, allow_nil: true
   validates :ethnicity, presence: true, allow_nil: true
@@ -121,6 +127,7 @@ class User < ApplicationRecord
   attr_accessor :login
 
   scope :administrators, -> { joins(:administrator) }
+  scope :editors,        -> { joins(:editor) }
   scope :moderators,     -> { joins(:moderator) }
   scope :organizations,  -> { joins(:organization) }
   scope :officials,      -> { where("official_level > 0") }
@@ -160,7 +167,8 @@ class User < ApplicationRecord
     unless: :document_number_changes_count
   before_save :date_of_birth_changes_amount,
     unless: :date_of_birth_changes_count
-  before_save :belongs_to_active_electoral_college,
+  before_save :copy_votes_from_erased_user, if: :document_number_changed?
+  after_save :belongs_to_active_electoral_college,
     if: :document_number_changed?
 
   # Get the existing user by email if the provider gives us a verified email.
@@ -225,6 +233,10 @@ class User < ApplicationRecord
 
   def moderator?
     moderator.present?
+  end
+
+  def editor?
+    editor.present?
   end
 
   def valuator?
@@ -297,10 +309,32 @@ class User < ApplicationRecord
   end
 
   def erase(attrs)
-    assign_attributes(
+    update!(
       erased_at: Time.current,
       erase_reason: attrs[:erase_reason],
       erase_reason_description: attrs[:erase_reason_description],
+      username: nil,
+      email: nil,
+      date_of_birth: nil,
+      gender: nil,
+      ethnicity: nil,
+      home_address: nil,
+      address_number: nil,
+      address_complement: nil,
+      uf: nil,
+      city: nil,
+      cep: nil,
+      geozone_id: nil,
+      first_name: nil,
+      last_name: nil,
+      unconfirmed_email: nil,
+      phone_number: nil,
+      encrypted_password: "",
+      confirmation_token: nil,
+      reset_password_token: nil,
+      email_verification_token: nil,
+      confirmed_phone: nil,
+      unconfirmed_phone: nil,
       email_on_comment: false,
       email_on_comment_reply: false,
       newsletter: false,
@@ -309,24 +343,7 @@ class User < ApplicationRecord
       recommended_debates: false,
       recommended_proposals: false
     )
-
-    unless can_vote?
-      assign_attributes(
-        username: nil,
-        email: nil,
-        unconfirmed_email: nil,
-        phone_number: nil,
-        encrypted_password: "",
-        confirmation_token: nil,
-        reset_password_token: nil,
-        email_verification_token: nil,
-        confirmed_phone: nil,
-        unconfirmed_phone: nil
-      )
-      identities.destroy_all
-    end
-
-    save
+    identities.destroy_all
   end
 
   def erased?
@@ -334,22 +351,15 @@ class User < ApplicationRecord
   end
 
   def take_votes_if_erased_document(document_number, document_type)
-    erased_user = User.erased.find_by(document_number: document_number,
-                                      document_type: document_type)
+    erased_user = User.erased.find_by(
+      document_number: document_number,
+      document_type: document_type
+    )
     if erased_user.present?
       take_votes_from(erased_user)
+      update!(former_users_data_log: data_log(erased_user))
       erased_user.update!(document_number: nil, document_type: nil)
     end
-  end
-
-  def take_votes_from(other_user)
-    return if other_user.blank?
-
-    Poll::Voter.where(user_id: other_user.id).update_all(user_id: id)
-    Budget::Ballot.where(user_id: other_user.id).update_all(user_id: id)
-    Vote.where("voter_id = ? AND voter_type = ?", other_user.id, "User").update_all(voter_id: id)
-    data_log = "id: #{other_user.id} - #{Time.current.strftime("%Y-%m-%d %H:%M:%S")}"
-    update!(former_users_data_log: "#{former_users_data_log} | #{data_log}")
   end
 
   def locked?
@@ -366,6 +376,10 @@ class User < ApplicationRecord
 
   def self.minimum_required_age
     (Setting["min_age_to_participate"] || 16).to_i
+  end
+
+  def self.document_type_options
+    DOCUMENT_TYPES.map { |type| [type.upcase, type] }
   end
 
   def show_welcome_screen?
@@ -461,10 +475,6 @@ class User < ApplicationRecord
     devise_mailer.send(notification, self, *args).deliver_later
   end
 
-  def local_document?
-    document_number && document_type == 'cpf'
-  end
-
   def foreigner_document?
     document_type == 'rnm'
   end
@@ -496,17 +506,18 @@ class User < ApplicationRecord
           scope: 'activerecord.errors.models.user.attributes.date_of_birth',
           age: min_age
         )
-        errors.add(:base, message)
+        errors.add(:date_of_birth, message)
       end
     end
 
-    def cpf_number
-      unless CPF.valid?(document_number)
+    def max_user_age
+      max_age = 120
+      if age && age > max_age
         message = I18n.t(
-          :invalid_number,
-          scope: 'activerecord.errors.models.user.attributes.cpf'
+          :max_user_age,
+          scope: 'activerecord.errors.models.user.attributes.date_of_birth'
         )
-        errors.add(:base, message)
+        errors.add(:date_of_birth, message)
       end
     end
 
@@ -538,8 +549,8 @@ class User < ApplicationRecord
     end
 
     def sanitaze_name
-      self.first_name = first_name.squish.titleize if first_name_changed?
-      self.last_name = last_name.squish.titleize if last_name_changed?
+      self.first_name = first_name&.squish&.titleize if first_name_changed?
+      self.last_name = last_name&.squish&.titleize if last_name_changed?
     end
 
     def document_number_changes_amount
@@ -560,5 +571,39 @@ class User < ApplicationRecord
         .by_document(document_type, document_number).each do |elector|
           elector.update(user: self, user_found: true)
         end
+    end
+
+    def disabled_user
+      self.class.erased.find_by(
+        document_number: document_number, document_type: document_type
+      )
+    end
+
+    def no_disabled_user?
+      disabled_user.blank?
+    end
+
+    def copy_votes_from_erased_user
+      if disabled_user.present?
+        take_votes_from(disabled_user)
+        self.former_users_data_log = data_log(disabled_user)
+        disabled_user.update!(document_number: nil, document_type: nil)
+      end
+    end
+
+    def take_votes_from(other_user)
+      other_user_id = other_user.id
+      Budget::Ballot.where(user_id: other_user_id).update_all(user_id: id)
+      Poll::Answer.where(author_id: other_user_id).update_all(author_id: id)
+      Poll::Voter.where(user_id: other_user_id).update_all(user_id: id)
+      Legislation::Annotation.where(author_id: other_user_id).update_all(author_id: id)
+      Legislation::Answer.where(user_id: other_user_id).update_all(user_id: id)
+      Legislation::TopicVote.where(user_id: other_user_id).update_all(user_id: id)
+      Vote.where("voter_id = ? AND voter_type = ?", other_user_id, "User").update_all(voter_id: id)
+    end
+
+    def data_log(other_user)
+      log = "id: #{other_user.id} - #{Time.current.strftime("%Y-%m-%d %H:%M:%S")}"
+      "#{former_users_data_log} | #{log}"
     end
 end

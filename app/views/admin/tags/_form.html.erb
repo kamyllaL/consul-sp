@@ -1,0 +1,11 @@
+<%= form_for(@tag, url: form_url, as: :tag) do |f| %>
+  <div class="small-12 medium-6">
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="small-12 medium-6">
+    <%= f.select :kind, Admin::TagsController::KINDS.values, include_blank: true %>
+  </div>
+
+  <%= f.submit(t("shared.save"), class: "button success") %>
+<% end %>

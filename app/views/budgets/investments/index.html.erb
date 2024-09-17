@@ -12,31 +12,7 @@
 
 <main id="budget-investments-main">
 
-  <% unless params[:search].present? %>
-    <%= render "/budgets/investments/header" %>
-  <% end %>
-
-  <% if params[:search].present? || params[:advanced_search].present? %>
-    <div class="highlight no-margin-top padding margin-bottom">
-      <div class="row">
-        <div class="small-12 column">
-          <h2>
-            <% if @heading %>
-              <%= t("shared.search_results_for", heading: @heading.name) %>
-            <% else %>
-              <%= t("shared.search_results") %>
-            <% end %>
-          </h2>
-          <p>
-            <%= page_entries_info @investments %>
-            <%= sanitize(t("budgets.investments.index.search_results",
-                   count: @investments.size,
-                   search_term: params[:search])) %>
-          </p>
-        </div>
-      </div>
-    </div>
-  <% end %>
+  <%= render "/budgets/investments/header" %>
 
   <div class="row">
     <div id="budget-investments" class="budget-investments-list small-12 medium-9 column">
@@ -53,15 +29,52 @@
             <%= t("budgets.investments.index.unfeasible_text") %>
           </div>
         </div>
-      <% elsif @heading.present? %>
-        <div class="row">
+      <% elsif @heading.present? && params[:commit].nil? %>
+        <div class="row margin-top">
           <div class="small-12 column">
             <%= render "view_mode" %>
           </div>
         </div>
       <% end %>
 
-      <%= render("shared/advanced_search", search_path: budget_investments_path(@budget)) %>
+      <% if @heading.present? && params[:commit].nil? %>
+        <%= render(
+          "shared/advanced_search",
+          search_path: budget_investments_path(@budget)
+        ) %>
+      <% else %>
+        <%= render('search') %>
+
+        <% if existing_heading(params[:heading_slug]) && params[:search].present? %>
+          <p>
+            <%= page_entries_info @investments %>
+            <%= sanitize(t(
+              "budgets.investments.index.search_results_with_heading_and_term",
+              count: @investments.size,
+              heading_name: @heading.name,
+              search_term: params[:search]
+            )) %>
+          </p>
+        <% elsif @heading.present? %>
+          <p>
+            <%= page_entries_info @investments %>
+            <%= sanitize(t(
+              "budgets.investments.index.search_results_with_heading",
+              count: @investments.size,
+              heading_name: @heading.name
+            )) %>
+          </p>
+        <% elsif params[:search].present? %>
+          <p>
+            <%= page_entries_info @investments %>
+            <%= sanitize(t(
+              "budgets.investments.index.search_results_with_term",
+              count: @investments.size,
+              search_term: params[:search]
+            )) %>
+          </p>
+        <% end %>
+      <% end %>
 
       <% if unfeasible_or_unselected_filter %>
         <ul class="no-bullet submenu">
@@ -97,7 +110,7 @@
     </div>
 
     <div class="small-12 medium-3 column">
-      <aside class="margin-bottom">
+      <aside class="margin">
         <div id="sidebar">
           <%= render "/budgets/investments/sidebar" %>
         </div>

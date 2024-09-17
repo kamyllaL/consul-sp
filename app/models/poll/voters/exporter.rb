@@ -14,7 +14,7 @@ class Poll::Voters::Exporter
       end
 
       @poll.recounts.each do |recount|
-        recount.total_amount.times do
+        unidentified_voters_amount(recount).times do
           csv << [recount.id.to_s, voter_translation(recount.origin)]
         end
       end
@@ -51,5 +51,9 @@ class Poll::Voters::Exporter
     if voter.ethnicity.present?
       voter_translation("ethnicity_options.#{voter.ethnicity}")
     end
+  end
+
+  def unidentified_voters_amount(recount)
+    recount.total_amount - recount.voters.size
   end
 end

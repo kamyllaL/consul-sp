@@ -7,7 +7,7 @@
       <%= f.hidden_field :poll_electoral_college_id, value: @electoral_college.id %>
 
       <div class="small-12 medium-4 column">
-        <%= f.select :document_type, options_for_document_type %>
+        <%= f.select :document_type, User.document_type_options %>
       </div>
       <div class="small-12 medium-4 column">
         <%= f.text_field :document_number %>

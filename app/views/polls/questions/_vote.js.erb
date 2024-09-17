@@ -1,4 +1,4 @@
 <% poll = @question.poll %>
 <% token = poll_voter_token(poll, current_user) %>
 $("#<%= dom_id(@question) %>_answers").html("<%= j render("polls/questions/answers", question: @question, token: token) %>");
-$(".poll-total-votes-counter").html("<%= j t("polls.index.votes_counter", count: poll.answer_count) %>")
+$(".poll-total-votes-counter").html("<%= j t("polls.index.votes_counter", count: poll.web_answers_count) %>")

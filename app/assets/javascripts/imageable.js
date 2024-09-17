@@ -44,8 +44,7 @@
           App.Imageable.clearInputErrors(data);
           App.Imageable.setInputErrors(data);
           App.Imageable.clearPreview(data);
-          $(data.destroyAttachmentLinkContainer).find("a.delete:not(.remove-nested)").remove();
-          $(data.addAttachmentLabel).addClass("error");
+          $(data.addAttachmentLabel).addClass("hide");
           $(data.addAttachmentLabel).show();
         },
         done: function(e, data) {

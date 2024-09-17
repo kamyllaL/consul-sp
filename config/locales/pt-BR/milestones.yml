@@ -4,5 +4,4 @@ pt-BR:
       no_milestones: Não há etapas definidas
       progress: Progresso
     show:
-      publication_date: "Publicado %{publication_date}"
-      status_changed: Status de investimento mudado para
+      status_changed: Monitoramento atualizado para

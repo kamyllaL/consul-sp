@@ -27,7 +27,7 @@
       <%= paginate @polls %>
     <% else %>
       <div class="callout primary margin-top">
-        <% if @expireds.empty? %>
+        <% if expired? %>
           <%= t("polls.index.no_close_polls") %>
         <% else %>
           <%= t("polls.index.no_open_polls") %>

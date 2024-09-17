@@ -1,0 +1,8 @@
+pt-BR:
+  edition:
+    dashboard:
+      index:
+        title: Edição
+        description: Bem-vindo ao painel de edição %{org}.
+    header:
+      title: Edição

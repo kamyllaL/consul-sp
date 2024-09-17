@@ -31,9 +31,11 @@
         <tr id="<%= dom_id(milestone) %>" class="milestone">
           <td class="text-center"><%= milestone.id %></td>
           <td>
-            <%= link_to milestone.title,
-                        polymorphic_path([:admin, *resource_hierarchy_for(milestone)],
-                                         action: :edit) %>
+            <%= link_to l(milestone.title.to_datetime, format: :date_day_and_time),
+              polymorphic_path(
+                [:admin, *resource_hierarchy_for(milestone)], action: :edit
+              )
+            %>
           </td>
           <td class="small small-5"><%= milestone.description %></td>
           <td class="small">
@@ -50,10 +52,13 @@
           <td class="small">
             <% if milestone.documents.present? %>
               <% milestone.documents.each do |document| %>
-                <%= link_to document.title,
-                              document.attachment.url,
-                              target: "_blank",
-                              rel: "nofollow" %><br>
+                <div>
+                  <%= link_to document.title,
+                    document.attachment.url,
+                    target: "_blank",
+                    rel: "nofollow"
+                  %>
+                </div>
               <% end %>
             <% end %>
           </td>

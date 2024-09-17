@@ -1,0 +1,36 @@
+<% provide :title do %>
+  <%= t("admin.header.title") %> - <%= t("admin.menu.legislation") %> - <%= @process.title %> - <%= t("admin.legislation.draft_versions.index.title") %>
+<% end %>
+
+<div class="legislation-draft-versions-index">
+
+  <%= back_link_to admin_legislation_processes_path, t("admin.legislation.processes.edit.back") %>
+
+  <h2><%= @process.title %></h2>
+
+  <%= render "admin/legislation/processes/subnav", process: @process, active: "draft_versions" %>
+
+  <div class="small-12 column">
+
+    <div class="float-right">
+      <%= link_to t("admin.legislation.draft_versions.edit.title"), edit_admin_legislation_process_draft_version_path(@process, @draft_version), 
+          class: "button" %>
+    </div>    
+
+    <div class="small-12 medium-9 column">
+      <h2> <%= @draft_version.title %> </h2>
+    </div>
+
+    <div class="small-12 column">
+      <% status =  @draft_version.status %>
+      <h5>
+        <%= t("admin.legislation.draft_versions.show.status.#{status}") %> - 
+        <%= t("admin.legislation.draft_versions.form.hints.status.#{status}") %>
+      </h5>
+    </div>
+
+    <div class="small-12 column text-preview">
+      <%= sanitize(@draft_version.body) %>
+    </div>
+  </div>
+</div>

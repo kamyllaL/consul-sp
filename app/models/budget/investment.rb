@@ -109,6 +109,10 @@ class Budget
     scope :by_admin,          ->(admin_id)    { where(administrator_id: admin_id) }
     scope :by_tag,            ->(tag_name)    { tagged_with(tag_name).distinct }
 
+    scope :by_heading_slug, ->(heading_slug) do
+      joins(:heading).where(budget_headings: { slug: heading_slug })
+    end
+
     scope :for_render, -> { includes(:heading) }
 
     def self.by_valuator(valuator_id)
@@ -189,12 +193,29 @@ class Budget
       results
     end
 
-    def self.apply_filters_and_search(_budget, params, current_filter = nil)
-      investments = all
-      investments = investments.send(current_filter)             if current_filter.present?
-      investments = investments.by_heading(params[:heading_id])  if params[:heading_id].present?
-      investments = investments.search(params[:search])          if params[:search].present?
-      investments = investments.filter(params[:advanced_search]) if params[:advanced_search].present?
+    def self.apply_filters_and_search(budget, params, current_filter = nil)
+      investments = budget.investments
+      investments = investments.send(current_filter) if current_filter.present?
+
+      if params[:heading_id].present?
+        investments = investments.by_heading(params[:heading_id])
+      elsif params[:heading_slug].present?
+        investments = investments.by_heading_slug(params[:heading_slug])
+      end
+      if params[:search].present?
+        search_by_id = investments.where(id: params[:search])
+        if search_by_id.any?
+          investments = search_by_id
+        else
+          investments = investments.search(params[:search])
+        end
+      end
+      if params[:advanced_search].present?
+        investments = investments.filter(params[:advanced_search])
+      end
+      if params[:tag].present?
+        investments = investments.tagged_with(params[:tag])
+      end
       if params[:status_filters]&.any?
         investments =
           investments.status_filters(params[:status_filters], investments)

@@ -1,6 +1,7 @@
 class Image < ApplicationRecord
   include ImagesHelper
   include ImageablesHelper
+  include Rails.application.routes.url_helpers
 
   has_attached_file :attachment, styles: {
                                    large: "x#{Setting["uploads.images.min_height"]}",
@@ -10,7 +11,7 @@ class Image < ApplicationRecord
                                  url: "/system/:class/:prefix/:style/:hash.:extension",
                                  hash_data: ":class/:style",
                                  use_timestamp: false,
-                                 hash_secret: Rails.application.secrets.secret_key_base
+                                 hash_secret: Rails.application.secrets.paperclip_key_base
   attr_accessor :cached_attachment
 
   belongs_to :user
@@ -58,6 +59,10 @@ class Image < ApplicationRecord
     else
       ":attachment/:id_partition"
     end
+  end
+
+  def url
+    URI.join(root_url, attachment.url).to_s
   end
 
   private

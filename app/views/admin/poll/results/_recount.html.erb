@@ -12,3 +12,39 @@
     </tr>
   </tbody>
 </table>
+
+<% explanations = resource.recounts.select(&:difference_explanation) %>
+<% if explanations.any? %>
+  <div>
+    <h4><%= t("officing.results.index.difference_explanation") %></h4>
+    <% explanations.each do |explanation| %>
+      <p class="no-margin-bottom"><%= explanation.difference_explanation %></p>
+      <small>
+        <%= t(
+          "officing.results.index.table_booth_name",
+          name: explanation.booth_name
+        ) %>
+      </small>
+      <table class="margin-bottom">
+        <tbody>
+          <tr>
+            <td>
+              <%= t(
+                "officing.results.index.table_electors_count",
+                count: explanation.voters.size
+              ) %>
+            </td>
+            <td>
+              <%= t(
+                "officing.results.index.table_total_count",
+                count: explanation.total_amount
+              ) %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+<% end %>
+
+<hr>

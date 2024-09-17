@@ -27,12 +27,12 @@
 
 <%= render "budgets/subnav", budget: @budget %>
 
-<div class="row">
-  <div class="small-12 medium-3 large-2 column">
-    <h3 class="margin-bottom">
+<div class="row" data-equalizer data-equalizer-on="medium">
+  <div class="small-12 medium-3 column subprefecture-headings" data-equalizer-watch>
+    <h4 class="margin-bottom">
       <%= t("budgets.executions.heading_selection_title") %>
-    </h3>
-    <ul class="menu vertical no-margin-top no-padding-top">
+    </h4>
+    <ul class="menu vertical">
       <% @investments_by_heading.each_pair do |heading, investments| %>
         <li>
           <%= link_to heading.name, "#" + heading.name.parameterize %>
@@ -41,19 +41,8 @@
     </ul>
   </div>
 
-  <div class="small-12 medium-9 large-10 column">
+  <div class="small-12 medium-9 column" data-equalizer-watch>
     <%= form_tag(budget_executions_path(@budget), method: :get) do %>
-      <div class="small-12 medium-3 column">
-        <%= label_tag :milestone_tag, t("budgets.executions.filters.milestone_tag.label") %>
-        <%= select_tag :milestone_tag,
-                      options_for_select(
-                        options_for_milestone_tags,
-                        params[:milestone_tag]
-                      ),
-                      class: "js-submit-on-change",
-                      prompt: t("budgets.executions.filters.milestone_tag.all",
-                      count: @budget.investments.winners.with_milestones.count) %>
-      </div>
       <div class="small-12 medium-3 column">
         <%= label_tag :status, t("budgets.executions.filters.status.label") %>
         <%= select_tag :status,

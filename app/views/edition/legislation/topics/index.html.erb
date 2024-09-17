@@ -1,0 +1,56 @@
+<% provide :title do %>
+  <%= t("admin.header.title") %> - <%= t("admin.menu.legislation") %> - <%= @process.title %> - <%= t("admin.legislation.topics.index.title") %>
+<% end %>
+
+<div class="legislation-draft-versions-index">
+  <%= back_link_to edition_legislation_processes_path, t("shared.back") %>
+
+  <h2><%= @process.title %></h2>
+
+  <%= render "edition/legislation/processes/subnav",
+    process: @process, active: "topics"
+  %>
+
+  <div class="small-12 column">
+    <h4 class="inline-block">
+      <%= t("admin.legislation.topics.index.title") %>
+    </h4>
+
+    <div class="float-right">
+      <%= link_to(
+        document_link, document_edition_legislation_process_topics_path,
+        class: "button"
+      ) %>
+    </div>
+
+    <% if @topics.any? %>
+      <p class="download-link">
+        <%= link_to t("legislation.topics.index.result_spreadsheet"),
+          topics_legislation_process_path(@process, csv_params),
+          class: "small"
+        %>
+      </p>
+      <table class="stack">
+       <thead>
+          <tr>
+            <th><%= t("admin.legislation.topics.table.topic_level_label") %></th>
+            <th><%= t("admin.legislation.topics.table.title") %></th>
+            <th><%= t("admin.legislation.topics.table.assessments") %></th>
+            <th class="text-center"><%= t("admin.legislation.topics.table.topic_votes_count") %></th>
+            <th class="text-center"><%= t("admin.legislation.topics.table.comments_count") %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% counter_level = 1 %>
+          <% @topics.each.with_index(1) do |topic, index| %>
+            <%= render 'topic_result_row',
+              topic: topic,
+              indexes: [index],
+              counter_level: counter_level
+            %>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</div>

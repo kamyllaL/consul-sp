@@ -170,19 +170,19 @@ a {
 }
 
 .margin-top {
-  margin-top: $line-height;
+  margin-top: $line-height !important;
 }
 
 .margin-bottom {
-  margin-bottom: $line-height;
+  margin-bottom: $line-height !important;
 }
 
 .margin-left {
-  margin-left: $line-height;
+  margin-left: $line-height !important;
 }
 
 .margin-right {
-  margin-right: $line-height;
+  margin-right: $line-height !important;
 }
 
 .float-right-medium {
@@ -1296,7 +1296,10 @@ form {
   background: $alert-bg;
   color: $color-alert;
   float: right;
-  padding: 0 $line-height / 4;
+
+  &.small {
+    padding: 0 $line-height / 4;
+  }
 
   a {
     color: $color-alert;
@@ -1517,8 +1520,8 @@ form {
     margin-bottom: 0;
     margin-top: $line-height / 4;
     position: absolute;
-    right: 0;
-    top: -3px;
+    right: 3px;
+    top: -5px;
   }
 }
 
@@ -2090,25 +2093,18 @@ table {
 .verify-account {
   padding-right: $line-height / 2;
 
-  .already-verified {
+  .icon-check {
+    font-size: rem-calc(24);
+    line-height: rem-calc(45);
+    vertical-align: middle;
     color: $check;
-    line-height: $line-height * 2;
-
-    .icon-check {
-      font-size: rem-calc(24);
-      line-height: rem-calc(45);
-      vertical-align: middle;
-    }
   }
 
-  .unverified {
-    line-height: $line-height * 2;
-
-    .icon-x {
-      font-size: rem-calc(24);
-      line-height: rem-calc(45);
-      vertical-align: middle;
-    }
+  .icon-x {
+    font-size: rem-calc(24);
+    line-height: rem-calc(45);
+    vertical-align: middle;
+    color: $delete;
   }
 }
 

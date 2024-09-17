@@ -21,7 +21,21 @@
                          new_legislation_process_proposal_path(process),
                          class: "button expanded",
                          id: "create-new-proposal" %></p>
+        <% else %>
+          <ul class="small">
+            <li>
+              <%= link_to t("legislation.processes.proposals.spreedsheet"),
+                proposals_legislation_process_path(@process, proposals_csv_params)
+              %>
+            </li>
+            <li>
+              <%= link_to t("legislation.processes.proposals.comments_spreedsheet"),
+                proposals_legislation_process_path(@process, proposal_comments_csv_params)
+              %>
+            </li>
+          </ul>
         <% end %>
+
         <%= render "legislation/proposals/categories", taggable: process %>
       </div>
     </div>
